@@ -5,6 +5,7 @@ class Thumbnails extends Component {
     constructor() {
         super();
         this.state = {
+            customers: [],
             thumbnails: [],
             value: ""
         };
@@ -17,10 +18,13 @@ class Thumbnails extends Component {
 
     handleSubmit(event) {
         alert('A name was submitted: ' + this.state.value);
-        fetch('/api/repeat/'+ this.state.value)
-            .then(res => res.json()
-                .then(thumbnails => this.setState({ thumbnails }, () => console.log('Customers fetched..', thumbnails))));
+        fetch('/api/repeat/' + this.state.value)
+        .then(res => res.json())
+        .then(thumbnails => this.setState({ thumbnails }, () => console.log('Customers fetched...', thumbnails)));
+        event.preventDefault();
     }
+
+
     render() {
         return (
             <div>
