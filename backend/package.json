@@ -1,0 +1,35 @@
+{
+  "name": "YOUTUBE REPEAT",
+  "version": "1.0.0",
+  "description": "JS PROJECT",
+  "main": "index.js",
+  "dependencies": {
+    "append-query": "^2.0.1",
+    "concurrently": "^3.5.1",
+    "ejs": "^2.5.9",
+    "express": "^4.16.3",
+    "googleapis": "^29.0.0",
+    "request": "^2.85.0",
+    "request-promise": "^4.2.2",
+    "tape": "^4.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js",
+    "server": "nodemon index.js",
+    "frontend": "cd ../frontend && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\""
+  },
+  "repository": {
+    "type": "git",
+  },
+  "keywords": [
+    "node"
+  ],
+  "author": "Jonathan ESPIARD Yoan Feijoeiro",
+  "license": "MIT"
+
+}
