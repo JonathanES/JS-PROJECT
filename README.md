@@ -14,4 +14,4 @@ $ npm run dev
 ```
 
 Your frontend should now be running on [localhost:3000](http://localhost:3000/).
-Your backend should now be running on [localhost:3000](http://localhost:3000/).
+Your backend should now be running on [localhost:3000](http://localhost:5000/).
