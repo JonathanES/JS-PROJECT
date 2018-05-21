@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './thumbnails.css';
+import './videos.css';
 
-class Thumbnails extends Component {
+class Videos extends Component {
     constructor() {
         super();
         this.state = {
@@ -32,7 +32,7 @@ class Thumbnails extends Component {
     render() {
         return (
             <div>
-                <h2>Thumbnails</h2>
+                <h2>Videos</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
@@ -48,4 +48,4 @@ class Thumbnails extends Component {
     }
 }
 
-export default Thumbnails;
+export default Videos;
