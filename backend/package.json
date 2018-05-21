@@ -1,5 +1,5 @@
 {
-  "name": "YOUTUBE REPEAT",
+  "name": "backend",
   "version": "1.0.0",
   "description": "JS PROJECT",
   "main": "index.js",
@@ -24,7 +24,7 @@
     "dev": "concurrently \"npm run server\" \"npm run frontend\""
   },
   "repository": {
-    "type": "git",
+    "type": "git"
   },
   "keywords": [
     "node"
