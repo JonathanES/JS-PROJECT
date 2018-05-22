@@ -1,6 +1,7 @@
-const models =   require('express').Router();
+const api =   require('express').Router();
 
-const repeat = require('./repeat')(models);
-const user = require('./user')(models);
+const repeat = require('./repeat')(api);
+const user = require('./user')(api);
+const history = require('./history')(api);
 
-module.exports = models;
+module.exports = api;

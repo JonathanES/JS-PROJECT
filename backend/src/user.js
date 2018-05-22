@@ -37,7 +37,7 @@ function getAllUser(req, res, next) {
 }
 
 function getSingleUser(req, res, next) {
-    const id         = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     db.one('select * from t_user where id = $1', id)
         .then(function (data) {
             data.password = data.password.replace(/\s/g, '');
@@ -59,8 +59,8 @@ function getSingleUser(req, res, next) {
 }
 
 function getSingleUserByEmail(req, res, next) {
-    const mail         = req.params.email;
-    const pwd         = req.params.pwd;
+    const mail = req.params.email;
+    const pwd = req.params.pwd;
     db.one('select * from t_user where email = $1', mail)
         .then(function () {
             db.one('select * from t_user where email = $1 and password = $2', [mail, pwd])
@@ -91,24 +91,16 @@ function getSingleUserByEmail(req, res, next) {
         });
 }
 
-async function checkUser(email        , address        )               {
+async function checkUser(email, address) {
     return new Promise((resolve, reject) => {
-        let count         = 0;
-        db.task(t => {
-            return t.one('select count(1) as count1 from t_user where  Email  = $1;', email)
-                .then(email => {
-                    count = parseInt(email.count1);
-                    return t.any('SELECT COUNT(1) as count2 FROM t_address where id = $1', address);
-                });
-        })
+        let count = 0;
+        db.one('select count(1) as count from t_user where  Email  = $1;', email)
             .then(events => {
+                count = parseInt(email.count);
                 if (count === 1)
                     resolve(false);
-                count += parseInt(events[0].count2);
-                if (count === 1)
-                    resolve(true);
                 else
-                    resolve(false);
+                    resolve(true);
                 // success;
             })
             .then(function (data) {
@@ -123,10 +115,7 @@ async function checkUser(email        , address        )               {
 }
 
 function createUser(req, res, next) {
-    let email         = req.body.newemail;
-    let isTrueSet          = false;
-    const address         = parseInt(req.body.address);
-    const points         = 0;
+    let email = req.body.email;
     const prom = new Promise((resolve, reject) => {
         checkUser(email, address).then(function (value) {
             if (value != null)
@@ -139,8 +128,8 @@ function createUser(req, res, next) {
         if (check) {
             postMail(req.body, "create");
             req.body.newpwd = req.body.newpwd;
-            db.none('insert into t_user(email,password,emailconfirmed,firstname,lastname,gender,  id_address , points)' +
-                'values(${newemail}, ${newpwd} ,' + String(isTrueSet) + ', ${firstname }, ${lastname }, ${gender },' + address + ',' + points + ')',
+            db.none('insert into t_user(email,password,firstname,lastname)' +
+                'values(${email}, ${pwd} , ${firstname }, ${lastname })',
                 req.body)
                 .then(function () {
                     res.status(200).json({
@@ -163,14 +152,14 @@ function createUser(req, res, next) {
     });
 }
 
-function setQuery(body, id)         {
-    let str         = "UPDATE T_USER SET ";
-    const size         = str.length;
-    for (let i         in body) {
-        const key         = i;
-        const val         = body[i];
+function setQuery(body, id) {
+    let str = "UPDATE T_USER SET ";
+    const size = str.length;
+    for (let i in body) {
+        const key = i;
+        const val = body[i];
         if (val != null && val != undefined)
-            if (key == 'firstname' || key == 'lastname' || key == 'password' || key == 'gender')
+            if (key == 'firstname' || key == 'lastname' || key == 'password')
                 if (key == 'password')
                     str += key + " = '" + val + "', "
                 else
@@ -202,9 +191,9 @@ function createTransporter(service, user, password) {
 
 function createMessageCreateUser(email, firstname, lastname, password) {
     const option = {
-        from: 'SmartPickTeam@gmail.com',
+        from: 'repeateam@gmail.com',
         to: email,
-        subject: `SmartPick : Bienvenue ${firstname}`,
+        subject: `YoutubeRepeat : Bienvenue ${firstname}`,
         text: `Merci de vous être inscrit.
 Voici les informations concernant votre compte:
 Nom de compte: ${email}
@@ -226,16 +215,16 @@ function createMessageUpdateUser(body) {
     }
     text += "\n A bientôt !"
     const option = {
-        from: 'SmartPickTeam@gmail.com',
+        from: 'repeateam@gmail.com',
         to: body.email,
-        subject: `SmartPick : Mise à jour de vos informations ${body.firstname}`,
+        subject: `YoutubeRepeat : Mise à jour de vos informations ${body.firstname}`,
         text: text
     };
     return option;
 }
 
 function postMail(body, messageType) {
-    const transporter = createTransporter('gmail', 'SmartPickTeam@gmail.com', 'jonathanjuliamickaelyoan');
+    const transporter = createTransporter('gmail', 'repeateam@gmail.com', 'jonathanyoan');
     let option;
     if (messageType === "create")
         option = createMessageCreateUser(body.newemail, body.firstname, body.lastname, body.newpwd);
@@ -253,7 +242,7 @@ function postMail(body, messageType) {
 
 function updateUser(req, res, next) {
     const body = req.body;
-    const id         = parseInt(req.params.id);
+    const id = parseInt(req.params.id);
     const resultat = setQuery(body, id);
     if (resultat !== "can't update") {
         if (body.password)
@@ -285,7 +274,7 @@ function updateUser(req, res, next) {
 }
 
 function removeUser(req, res, next) {
-    const eltID         = parseInt(req.params.id);
+    const eltID = parseInt(req.params.id);
     db.result('delete from t_user where id = $1', eltID)
         .then(function (result) {
             res.status(200);
