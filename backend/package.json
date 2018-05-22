@@ -9,6 +9,9 @@
     "ejs": "^2.5.9",
     "express": "^4.16.3",
     "googleapis": "^29.0.0",
+    "moment": "^2.22.1",
+    "nodemailer": "^4.6.4",
+    "pg-promise": "^8.4.4",
     "request": "^2.85.0",
     "request-promise": "^4.2.2",
     "tape": "^4.9.0"
@@ -31,5 +34,4 @@
   ],
   "author": "Jonathan ESPIARD Yoan Feijoeiro",
   "license": "MIT"
-
 }
