@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Videos from '../videos/videos';
 import './thumbnails.css';
 
 class Thumbnails extends Component {
@@ -7,7 +8,9 @@ class Thumbnails extends Component {
         this.state = {
             customers: [],
             thumbnails: [],
-            value: ""
+            value: "",
+            search: true,
+            currentVideos: "bts"
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +30,9 @@ class Thumbnails extends Component {
 
     handleClick(event){
         alert('a picture was clicked on' + event.id);
+        this.setState({currentVideos: event});
+        this.setState({search: false});
+
     }
 
     render() {
@@ -41,8 +47,9 @@ class Thumbnails extends Component {
                     <input type="submit" value="Submit" />
                 </form>
                 {this.state.thumbnails.map(thumbnail =>
-                    <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={this.handleClick.bind(this,thumbnail)}/> {thumbnail.titles}</div>
+                    <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail.id)}/> {thumbnail.titles}</div>
                 )}
+                {this.state.search === false && <Videos name="jonathan" id={this.state.currentVideos}/>}
             </div>
         );
     }
