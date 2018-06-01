@@ -76,12 +76,12 @@ function getAllHistoryUser(req, res, next) {
         });
 }
 
-async function checkHistory(idUser, idProduct) {
+async function checkHistory(idUser) {
     return new Promise((resolve, reject) => {
         let count = 0;
         db.one('SELECT COUNT(1) as count FROM t_user where id = $1', idUser)
             .then(events => {
-                count = parseInt(user.count);
+                count = parseInt(events.count);
                 if (count === 1)
                     resolve(true);
                 else
@@ -89,6 +89,7 @@ async function checkHistory(idUser, idProduct) {
                 // success;
             })
             .catch(error => {
+                resolve(false);
                 // error;
             });
     });
@@ -108,7 +109,7 @@ function createHistory(req, res, next) {
     prom.then(function (check) {
         if (check) {
             db.none('insert into t_history'
-                + ' values($1,' + idUser + ', now())', url)
+                + ' values(default,$1,' + idUser + ', now())', url)
                 .then(function () {
                     res.status(200);
                     res.redirect('/models/history');

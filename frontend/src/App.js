@@ -9,20 +9,21 @@ class App extends Component {
     super();
     this.state = {
         search: true,
-        login: false
+        isLogin: false,
+        user: {}
     };
   }
-  changeStuff(paramsIfAny) {
-    this.setState({login: paramsIfAny});
+  changeStuff(data) {
+    this.setState({isLogin: data.isLogin, user: data.user});
   }
 
   render() {
     return (
       <div className="App">
 
-      {/*<CreateAccount />*/}
+     <CreateAccount />
       <Login login={this.changeStuff.bind(this)} />
-      { this.state.login === true && <Thumbnails/> }
+      { this.state.isLogin === true && <Thumbnails user={this.state.user}/> }
       </div>
     );
   }

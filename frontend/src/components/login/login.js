@@ -9,7 +9,8 @@ class Login extends Component {
       firstname: '',
       lastname: '',
       email: '',
-      password: ''
+      password: '',
+      id_user: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,8 +37,8 @@ class Login extends Component {
       .then(function (user) {
         switch (user.status) {
           case "success":
-            that.setState({ email: user.data.email, password: user.data.password, firstname: user.data.firstname, lastname: user.data.lastname });
-            that.props.login(true);
+            that.setState({ email: user.data.email, password: user.data.password, firstname: user.data.firstname, lastname: user.data.lastname, id_user: user.data.id });
+            that.props.login({isLogin: true, user: {email: that.state.email, password: that.state.password, firstname: that.state.firstname, lastname: that.state.lastname, id_user: that.state.id_user}});
             break;
           case "mail not found":
             alert("mail not found");

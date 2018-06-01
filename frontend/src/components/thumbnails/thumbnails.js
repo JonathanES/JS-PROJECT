@@ -3,14 +3,15 @@ import Videos from '../videos/videos';
 import './thumbnails.css';
 
 class Thumbnails extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             customers: [],
             thumbnails: [],
             value: "",
             search: true,
-            currentVideos: "bts"
+            currentVideos: "",
+            user: props.user
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,10 +30,21 @@ class Thumbnails extends Component {
     }
 
     handleClick(event){
-        alert('a picture was clicked on' + event.id);
+        alert('a picture was clicked on' + event);
+        this.state.user;
+        fetch('/api/history', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              url: event,
+              iduser: this.state.user.id_user
+            })
+          })
         this.setState({currentVideos: event});
         this.setState({search: false});
-
     }
 
     render() {
