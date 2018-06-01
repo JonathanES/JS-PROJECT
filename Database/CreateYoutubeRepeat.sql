@@ -14,7 +14,8 @@ CREATE TABLE T_User (
 );
 
 CREATE TABLE T_History (
-  URL				VARCHAR(256)    PRIMARY KEY NOT NULL ,
+   Id                SERIAL         PRIMARY KEY NOT NULL,
+  URL				VARCHAR(256)            NOT NULL ,
   Id_user           BIGINT          NOT NULL references T_User (Id),
   DatePost          TIMESTAMP       NOT NULL
 );
