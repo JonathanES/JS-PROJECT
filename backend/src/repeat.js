@@ -30,7 +30,6 @@ function getVideos(req, res, next) {
         safeSearch: 'moderate',
         videoEmbeddable: true
     }, (err, response) => {
-
         let thumbnails = [];
         for (var elt in response.data.items) {
             const item = response.data.items[elt];
@@ -42,6 +41,4 @@ function getVideos(req, res, next) {
         }
         res.json(thumbnails);
     });
-
-    //res.render('index');
 }

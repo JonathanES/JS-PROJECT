@@ -75,7 +75,7 @@ function getSingleUserByEmail(req, res, next) {
                 }).catch(function (err) {
                     res.status(404)
                         .json({
-                            status: 'Password not found',
+                            status: 'password not found',
                             data: {},
                             message: 'Password not found'
                         });
@@ -84,19 +84,19 @@ function getSingleUserByEmail(req, res, next) {
         .catch(function (err) {
             res.status(404)
                 .json({
-                    status: 'Mail not found',
+                    status: 'mail not found',
                     data: {},
                     message: 'Mail not found'
                 });
         });
 }
 
-async function checkUser(email, address) {
+async function checkUser(email) {
     return new Promise((resolve, reject) => {
         let count = 0;
         db.one('select count(1) as count from t_user where  Email  = $1;', email)
             .then(events => {
-                count = parseInt(email.count);
+                count = parseInt(events.count);
                 if (count === 1)
                     resolve(false);
                 else
@@ -117,7 +117,7 @@ async function checkUser(email, address) {
 function createUser(req, res, next) {
     let email = req.body.email;
     const prom = new Promise((resolve, reject) => {
-        checkUser(email, address).then(function (value) {
+        checkUser(email).then(function (value) {
             if (value != null)
                 resolve(value);
             else
@@ -126,10 +126,10 @@ function createUser(req, res, next) {
     });
     prom.then(function (check) {
         if (check) {
-            postMail(req.body, "create");
-            req.body.newpwd = req.body.newpwd;
+            //postMail(req.body, "create");
+            //req.body.newpwd = req.body.newpwd;
             db.none('insert into t_user(email,password,firstname,lastname)' +
-                'values(${email}, ${pwd} , ${firstname }, ${lastname })',
+                'values(${email}, ${password} , ${firstname}, ${lastname })',
                 req.body)
                 .then(function () {
                     res.status(200).json({
