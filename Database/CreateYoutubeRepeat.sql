@@ -23,14 +23,14 @@ CREATE TABLE T_History (
 CREATE TABLE T_Favorite (
   Id                SERIAL          PRIMARY KEY NOT NULL,
   Id_user           BIGINT          NOT NULL references T_User (Id),
-  Id_videos        VARCHAR(256)     NOT NULL references T_History (URL),
+  Id_videos        VARCHAR(256)     NOT NULL references T_History (Id),
   DatePost          TIMESTAMP       NOT NULL
 );
 
 CREATE TABLE T_Comment (
   Id                SERIAL          PRIMARY KEY NOT NULL,
   Id_user           BIGINT          NOT NULL references T_User (Id),
-  Id_videos        VARCHAR(16)     NOT NULL references T_History (URL),
+  Id_videos        VARCHAR(16)     NOT NULL references T_History (Id),
   DatePost          TIMESTAMP       NOT NULL,
   Grade             INT             CHECK (Grade > 0 AND Grade <= 5),
   Comment           VARCHAR (1024)
