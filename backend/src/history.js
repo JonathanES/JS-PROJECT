@@ -76,30 +76,36 @@ function getAllHistoryUser(req, res, next) {
         });
 }
 
-async function checkHistory(idUser) {
+async function checkHistory(idUser, url) {
     return new Promise((resolve, reject) => {
         let count = 0;
-        db.one('SELECT COUNT(1) as count FROM t_user where id = $1', idUser)
-            .then(events => {
-                count = parseInt(events.count);
-                if (count === 1)
-                    resolve(true);
-                else
-                    resolve(false);
-                // success;
-            })
-            .catch(error => {
+        db.task(t => {
+            return t.one('SELECT COUNT(1) as count FROM t_user where id = $1', idUser)
+                .then(user => {
+                    count = parseInt(user.count);
+                    return t.any('SELECT COUNT(1) as count2 FROM t_videos where url = $1', url);
+                });
+        }).then(events => {
+            count += parseInt(events[0].count2);
+            if (count === 2)
+                resolve(true);
+            else
                 resolve(false);
-                // error;
-            });
+            // success;
+        }).catch(error => {
+            resolve(false);
+            // error;
+        });
     });
 }
+
+
 // $FlowFixMe
 function createHistory(req, res, next) {
     const idUser = parseInt(req.body.iduser);
     const url = req.body.url;
     const prom = new Promise((resolve, reject) => {
-        checkHistory(idUser).then(function (value) {
+        checkHistory(idUser, url).then(function (value) {
             if (value != null)
                 resolve(value);
             else

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Videos from '../videos/videos';
 import './thumbnails.css';
+import Comment from '../comment/comment'
+import Comments from '../displayComment/displayComment'
 
 class Thumbnails extends Component {
     constructor(props) {
@@ -32,6 +34,17 @@ class Thumbnails extends Component {
     handleClick(event){
         alert('a picture was clicked on' + event);
         this.state.user;
+        fetch('/api/videos', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              url: event.id,
+              name: event.titles
+            })
+          });
         fetch('/api/history', {
             method: 'POST',
             headers: {
@@ -39,11 +52,11 @@ class Thumbnails extends Component {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              url: event,
+              url: event.id,
               iduser: this.state.user.id_user
             })
           })
-        this.setState({currentVideos: event});
+        this.setState({currentVideos: event.id});
         this.setState({search: false});
     }
 
@@ -59,9 +72,10 @@ class Thumbnails extends Component {
                     <input type="submit" value="Submit" />
                 </form>
                 {this.state.thumbnails.map(thumbnail =>
-                    <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail.id)}/> {thumbnail.titles}</div>
+                    <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)}/> {thumbnail.titles}</div>
                 )}
-                {this.state.search === false && <Videos name="jonathan" id={this.state.currentVideos}/>}
+                {this.state.search === false && <Videos id={this.state.currentVideos}/>}
+                {this.state.search === false &&<Comment user={this.state.user} videos={this.state.currentVideos}/>}
             </div>
         );
     }

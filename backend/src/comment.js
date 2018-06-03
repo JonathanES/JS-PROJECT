@@ -61,7 +61,7 @@ function getSingleComment(req, res, next) {
 
 function getSingleCommentByUrl(req, res, next) {
     const id = req.params.id;
-    db.any('select * from t_comment where id_videos = $1', id)
+    db.any('select id_videos, datepost, grade, comment, firstname, lastname from t_comment,t_user where id_videos = $1', id)
         .then(function (data) {
             res.status(200)
                 .json({
@@ -84,23 +84,22 @@ async function checkComment(idUser, url) {
     return new Promise((resolve, reject) => {
         let count = 0;
         db.task(t => {
-            return t.one('SELECT COUNT(1) as count1 FROM t_user where id = $1', idUser)
+            return t.one('SELECT COUNT(1) as count FROM t_user where id = $1', idUser)
                 .then(user => {
-                    count = parseInt(user.count1);
-                    return t.any('SELECT COUNT(1) as count2 FROM t_history where url = $1', url);
+                    count = parseInt(user.count);
+                    return t.any('SELECT COUNT(1) as count2 FROM t_videos where url = $1', url);
                 });
-        })
-            .then(events => {
-                count += parseInt(events[0].count2);
-                if (count === 2)
-                    resolve(true);
-                else
-                    resolve(false);
-                // success;
-            })
-            .catch(error => {
-                // error;
-            });
+        }).then(events => {
+            count += parseInt(events[0].count2);
+            if (count === 2)
+                resolve(true);
+            else
+                resolve(false);
+            // success;
+        }).catch(error => {
+            resolve(false);
+            // error;
+        });
     });
 }
 
@@ -108,7 +107,7 @@ function createComment(req, res, next) {
     const idUser = req.body.iduser;
     const url = req.body.url;
     const prom = new Promise((resolve, reject) => {
-        checkComment(idUser, idProduct).then(function (value) {
+        checkComment(idUser, url).then(function (value) {
             if (value != null)
                 resolve(value);
             else
@@ -116,13 +115,17 @@ function createComment(req, res, next) {
         });
     });
     prom.then(function (check) {
-        if (check && req.body.newgrade) {
+        if (check && req.body.grade) {
             db.none('insert into t_comment(id_user,id_videos,datepost,grade,comment)' +
-                'values(' + idUser + ', ${url}' + ', now(), ${newgrade}, ${newcomment })',
+                'values(' + idUser + ', ${url}' + ', now(), ${grade}, ${comment })',
                 req.body)
                 .then(function () {
-                    res.status(200);
-                    res.redirect('/models/comment');
+                    res.status(200)
+                        .json({
+                            status: 'Success',
+                            data: {},
+                            message: 'inserted a comment a grade'
+                        })
                 })
                 .catch(function (err) {
                     res.status(403)
@@ -133,13 +136,17 @@ function createComment(req, res, next) {
                         });
                 });
         }
-        else if (check && !req.body.newgrade) {
-            db.none('insert into t_comment(id_user,id_product,datepost,comment)' +
-                'values(' + idUser + ', ${url}' + ', now(), ${newcomment })',
-                req.body)
+        else if (check && !req.body.grade) {
+            db.none('insert into t_comment(id_user,id_videos,datepost,comment)' +
+            'values(' + idUser + ', ${url}, now(), ${comment })',
+            req.body)
                 .then(function () {
-                    res.status(200);
-                    res.redirect('/models/comment');
+                    res.status(200)
+                        .json({
+                            status: 'Success',
+                            data: {},
+                            message: 'inserted a comment'
+                        })
                 })
                 .catch(function (err) {
                     res.status(403)
@@ -149,10 +156,14 @@ function createComment(req, res, next) {
                             message: err.message
                         });
                 });
-
         }
         else
-            res.redirect('/models/comment');
+            res.status(200)
+                .json({
+                    status: 'failure',
+                    data: {},
+                    message: 'videos not in the table'
+                })
     });
 }
 
