@@ -1,4 +1,3 @@
-//     
 const db = require('./index');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');

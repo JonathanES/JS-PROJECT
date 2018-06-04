@@ -13,20 +13,31 @@ class Comment extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.componentDidMount();
+  }
+  static getDerivedStateFromProps(props, state){
+    if (props.user === state.user && props.videos === state.videos)
+      return null;
+    return {
+      user: props.user,
+      videos: props.videos
+    }    
   }
 
-  componentDidMount(){
-    const update = () =>{
+ componentDidUpdate(prevProps, prevState){
+    if (prevState.videos !== this.state.videos){
       fetch('/api/comment/' + this.state.videos)
       .then(res => res.json())
       .then(comments => this.setState({ comments: comments.data }, () => console.log('Customers fetched...', comments)));
-    }
-    update();
-}
+    } 
+ } 
+  componentDidMount() {
+    fetch('/api/comment/' + this.state.videos)
+      .then(res => res.json())
+      .then(comments => this.setState({ comments: comments.data }, () => console.log('Customers fetched...', comments)));
+  }
 
   handleChange(event) {
-    this.setState({comment: event.target.value});
+    this.setState({ comment: event.target.value });
   }
 
   handleSubmit(event) {
@@ -50,10 +61,10 @@ class Comment extends Component {
     return (
       <div>
         <h2>Comment</h2>
-        {this.state.comments.map(comment => <div><div> {comment.firstname} {comment.lastname} </div> <div>{comment.datepost} </div> <div> {comment.comment}  </div> </div> )} 
+        {this.state.comments.map(comment => <div><div> {comment.firstname} {comment.lastname} </div> <div>{comment.datepost} </div> <div> {comment.comment}  </div> </div>)}
         <form onSubmit={this.handleSubmit} id="usrform">
-        <textarea value={this.state.comment} onChange={this.handleChange}/>
-          <input type="submit" value="Submit"/>
+          <textarea value={this.state.comment} onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
         </form>
       </div>
     );

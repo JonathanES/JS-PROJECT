@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Videos from '../videos/videos';
 import './thumbnails.css';
 import Comment from '../comment/comment';
+import Favorite from '../favorite/favorite';
 
 class Thumbnails extends Component {
     constructor(props) {
@@ -73,6 +74,7 @@ class Thumbnails extends Component {
                     <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)}/> {thumbnail.titles}</div>
                 )}
                 {this.state.search === false && <Videos id={this.state.currentVideos} user={this.state.user}/>}
+                {this.state.search === false && <Favorite videos={this.state.currentVideos} user={this.state.user}/>}
                 {this.state.search === false &&<Comment user={this.state.user} videos={this.state.currentVideos}/>}
             </div>
         );

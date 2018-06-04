@@ -87,11 +87,13 @@ async function checkComment(idUser, url) {
             return t.one('SELECT COUNT(1) as count FROM t_user where id = $1', idUser)
                 .then(user => {
                     count = parseInt(user.count);
-                    return t.any('SELECT COUNT(1) as count2 FROM t_videos where url = $1', url);
+                    return t.any('SELECT COUNT(1) as count2 FROM t_history where url = $1', url);
                 });
         }).then(events => {
+            if (count != 1)
+                resolve(false);
             count += parseInt(events[0].count2);
-            if (count === 2)
+            if (count > 1)
                 resolve(true);
             else
                 resolve(false);
