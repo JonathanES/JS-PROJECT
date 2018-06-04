@@ -61,7 +61,7 @@ function getSingleComment(req, res, next) {
 
 function getSingleCommentByUrl(req, res, next) {
     const id = req.params.id;
-    db.any('select id_videos, datepost, grade, comment, firstname, lastname from t_comment,t_user where id_videos = $1', id)
+    db.any('select id_videos, datepost, grade, comment, firstname, lastname from t_comment,t_user where t_comment.id_user = t_user.id and id_videos = $1', id)
         .then(function (data) {
             res.status(200)
                 .json({

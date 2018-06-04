@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Videos from '../videos/videos';
 import './thumbnails.css';
-import Comment from '../comment/comment'
-import Comments from '../displayComment/displayComment'
+import Comment from '../comment/comment';
 
 class Thumbnails extends Component {
     constructor(props) {
@@ -33,7 +32,6 @@ class Thumbnails extends Component {
 
     handleClick(event){
         alert('a picture was clicked on' + event);
-        this.state.user;
         fetch('/api/videos', {
             method: 'POST',
             headers: {
@@ -74,7 +72,7 @@ class Thumbnails extends Component {
                 {this.state.thumbnails.map(thumbnail =>
                     <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)}/> {thumbnail.titles}</div>
                 )}
-                {this.state.search === false && <Videos id={this.state.currentVideos}/>}
+                {this.state.search === false && <Videos id={this.state.currentVideos} user={this.state.user}/>}
                 {this.state.search === false &&<Comment user={this.state.user} videos={this.state.currentVideos}/>}
             </div>
         );

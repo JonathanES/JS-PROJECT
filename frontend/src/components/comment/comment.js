@@ -13,6 +13,7 @@ class Comment extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentDidMount();
   }
 
   componentDidMount(){
@@ -29,7 +30,6 @@ class Comment extends Component {
   }
 
   handleSubmit(event) {
-    const that = this;
     fetch('/api/comment', {
       method: 'POST',
       headers: {
