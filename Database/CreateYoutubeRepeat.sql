@@ -9,8 +9,7 @@ CREATE TABLE T_User (
   Id                SERIAL          PRIMARY KEY NOT NULL,
   Email             VARCHAR(50)     UNIQUE NOT NULL,
   Password          CHAR(32)        NOT NULL,
-  Firstname         VARCHAR(50)     NOT NULL,
-  Lastname          VARCHAR(50)     NOT NULL
+  Pseudo            VARCHAR(50)     UNIQUE NOT NULL
 );
 
 CREATE TABLE T_Videos (
