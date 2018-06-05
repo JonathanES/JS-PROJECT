@@ -10,11 +10,34 @@ class App extends Component {
     this.state = {
         search: true,
         isLogin: false,
-        user: {}
+        user: {},
+        guest: {}
     };
   }
   changeStuff(data) {
     this.setState({isLogin: data.isLogin, user: data.user});
+  }
+
+  componentWillMount(){
+    const that = this;
+    fetch('/api/user/email/guest@gmail.com/pwd')
+      .then(res => res.json())
+      .then(function (user) {
+        switch (user.status) {
+          case "success":
+          let obj = {email: user.data.email, password: user.data.password, pseudo: user.data.pseudo, id_user: user.data.id}
+            that.setState({ guest: obj });
+            break;
+          case "mail not found":
+            alert("mail not found");
+            break;
+          case "password not found":
+            alert("password not found");
+            break;
+          default:
+            break;
+        }
+      });
   }
 
   render() {
@@ -22,8 +45,8 @@ class App extends Component {
       <div className="App">
 
      <CreateAccount />
-      <Login login={this.changeStuff.bind(this)} />
-      { this.state.isLogin === true && <Thumbnails user={this.state.user}/> }
+      {this.state.isLogin ===  false && <Login login={this.changeStuff.bind(this)} />}
+      <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest}/> 
       </div>
     );
   }

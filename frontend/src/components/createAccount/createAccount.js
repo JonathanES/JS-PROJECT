@@ -6,8 +6,7 @@ class CreateAccount extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
+      pseudo: '',
       email: '',
       password: ''
     };
@@ -17,11 +16,8 @@ class CreateAccount extends Component {
 
   handleChange(event) {
     switch (event.target.id) {
-      case "firstname":
-        this.setState({ firstname: event.target.value });
-        break;
-      case "lastname":
-        this.setState({ lastname: event.target.value });
+      case "pseudo":
+        this.setState({ pseudo: event.target.value });
         break;
       case "email":
         this.setState({ email: event.target.value });
@@ -43,8 +39,7 @@ class CreateAccount extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
+        pseudo: this.state.pseudo,
         email: this.state.email,
         password: this.state.password
       })
@@ -59,10 +54,8 @@ class CreateAccount extends Component {
         <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           <label>
-            firstname:
-          <input id="firstname" type="text" value={this.state.firstname} onChange={this.handleChange} />
-            Lastname:
-          <input id="lastname" type="text" value={this.state.lastname} onChange={this.handleChange} />
+            Pseudo:
+          <input id="pseudo" type="text" value={this.state.pseudo} onChange={this.handleChange} />
             Email:
           <input id="email" type="text" value={this.state.email} onChange={this.handleChange} />
             Password:

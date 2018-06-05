@@ -6,8 +6,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstname: '',
-      lastname: '',
+      pseudo: '',
       email: '',
       password: '',
       id_user: ''
@@ -37,8 +36,8 @@ class Login extends Component {
       .then(function (user) {
         switch (user.status) {
           case "success":
-            that.setState({ email: user.data.email, password: user.data.password, firstname: user.data.firstname, lastname: user.data.lastname, id_user: user.data.id });
-            that.props.login({isLogin: true, user: {email: that.state.email, password: that.state.password, firstname: that.state.firstname, lastname: that.state.lastname, id_user: that.state.id_user}});
+            that.setState({ email: user.data.email, password: user.data.password, pseudo: user.data.pseudo, id_user: user.data.id });
+            that.props.login({isLogin: true, user: {email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: that.state.id_user}});
             break;
           case "mail not found":
             alert("mail not found");

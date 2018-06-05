@@ -29,7 +29,7 @@ function getAllHistory(req, res, next) {
             res.status(403)
                 .json({
                     status: 'Forbidden',
-                    data: { err },
+                    data: {},
                     message: err.message
                 });
         });
@@ -50,7 +50,7 @@ function getSingleHistory(req, res, next) {
             res.status(404)
                 .json({
                     status: 'Not found',
-                    data: { err },
+                    data: {},
                     message: err.message
                 });
         });
@@ -72,7 +72,7 @@ function getAllHistoryUser(req, res, next) {
             res.status(404)
                 .json({
                     status: 'Not found',
-                    data: { err },
+                    data: {},
                     message: err.message
                 });
         });
@@ -121,7 +121,7 @@ function createHistory(req, res, next) {
                     res.status(403)
                         .json({
                             status: 'Forbidden',
-                            data: { err },
+                            data: {},
                             message: err.message
                         });
                 });
@@ -144,7 +144,7 @@ function removeHistory(req, res, next) {
                 res.status(403)
                     .json({
                         status: 'Forbidden',
-                        data: { err },
+                        data: {},
                         message: err.message
                     });
             });
@@ -164,7 +164,7 @@ function removeHistoryByUserId(req, res, next) {
                 res.status(403)
                     .json({
                         status: 'Forbidden',
-                        data: { err },
+                        data: {},
                         message: err.message
                     });
             });
@@ -182,7 +182,7 @@ function removeAllHistory(req, res, next) {
             res.status(404)
                 .json({
                     status: 'Not found',
-                    data: { err },
+                    data: {},
                     message: err.message
                 });
         });
@@ -203,8 +203,8 @@ function getViewsByUser(req, res, next) {
         .catch(function (err) {
             res.status(403)
                 .json({
-                    status: 'Forbidden',
-                    data: { err },
+                    status: 'failure',
+                    data: {},
                     message: err.message
                 });
         });
@@ -224,8 +224,8 @@ function getAllVideoViews(req, res, next) {
         .catch(function (err) {
             res.status(403)
                 .json({
-                    status: 'Forbidden',
-                    data: { err },
+                    status: 'failure',
+                    data: {},
                     message: err.message
                 });
         });

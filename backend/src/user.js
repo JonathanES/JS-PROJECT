@@ -128,8 +128,8 @@ function createUser(req, res, next) {
         if (check) {
             //postMail(req.body, "create");
             //req.body.newpwd = req.body.newpwd;
-            db.none('insert into t_user(email,password,firstname,lastname)' +
-                'values(${email}, ${password} , ${firstname}, ${lastname })',
+            db.none('insert into t_user(email,password,pseudo)' +
+                'values(${email}, ${password} , ${pseudo})',
                 req.body)
                 .then(function () {
                     res.status(200).json({
@@ -159,7 +159,7 @@ function setQuery(body, id) {
         const key = i;
         const val = body[i];
         if (val != null && val != undefined)
-            if (key == 'firstname' || key == 'lastname' || key == 'password')
+            if (key == 'pseudo' || key == 'password')
                 if (key == 'password')
                     str += key + " = '" + val + "', "
                 else
@@ -172,73 +172,6 @@ function setQuery(body, id) {
     str += " WHERE id = " + id;
     return str;
 }
-
-function createTransporter(service, user, password) {
-    const transporter = nodemailer.createTransport({
-        service: service,
-        secure: false, // use SSL
-        port: 25, // port for secure SMTP
-        auth: {
-            user: user,
-            pass: password
-        },
-        tls: {
-            rejectUnauthorized: false
-        }
-    });
-    return transporter;
-}
-
-function createMessageCreateUser(email, firstname, lastname, password) {
-    const option = {
-        from: 'repeateam@gmail.com',
-        to: email,
-        subject: `YoutubeRepeat : Bienvenue ${firstname}`,
-        text: `Merci de vous être inscrit.
-Voici les informations concernant votre compte:
-Nom de compte: ${email}
-Mot de passe: ${password}
-        
-A bientôt !`
-    };
-    return option;
-}
-
-function createMessageUpdateUser(body) {
-    let text = "Voici les nouvelles informations concernant votre compte \n";
-    for (let i in body) {
-        const key = i;
-        const val = body[i];
-        if (val != null && val != undefined)
-            if (key == 'firstname' || key == 'lastname' || key == 'password' || key == 'gender')
-                text += key + ": '" + val + "\n "
-    }
-    text += "\n A bientôt !"
-    const option = {
-        from: 'repeateam@gmail.com',
-        to: body.email,
-        subject: `YoutubeRepeat : Mise à jour de vos informations ${body.firstname}`,
-        text: text
-    };
-    return option;
-}
-
-function postMail(body, messageType) {
-    const transporter = createTransporter('gmail', 'repeateam@gmail.com', 'jonathanyoan');
-    let option;
-    if (messageType === "create")
-        option = createMessageCreateUser(body.newemail, body.firstname, body.lastname, body.newpwd);
-    else
-        option = createMessageUpdateUser(body);
-    transporter.sendMail(option, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
-
 
 function updateUser(req, res, next) {
     const body = req.body;

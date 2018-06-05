@@ -61,7 +61,7 @@ class Comment extends Component {
     return (
       <div>
         <h2>Comment</h2>
-        {this.state.comments.map(comment => <div><div> {comment.firstname} {comment.lastname} </div> <div>{comment.datepost} </div> <div> {comment.comment}  </div> </div>)}
+        {this.state.comments.map(comment => <div><div> {comment.pseudo}  </div> <div>{comment.datepost} </div> <div> {comment.comment}  </div> </div>)}
         <form onSubmit={this.handleSubmit} id="usrform">
           <textarea value={this.state.comment} onChange={this.handleChange} />
           <input type="submit" value="Submit" />
