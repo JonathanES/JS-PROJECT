@@ -40,7 +40,7 @@ CREATE TABLE T_Comment (
   Comment           VARCHAR (1024)
 );
 
-INSERT INTO T_USER VALUES('guest@gmail.com','pwd','guest');
+INSERT INTO T_USER VALUES(default,'guest@gmail.com','pwd','guest');
 
 
 
