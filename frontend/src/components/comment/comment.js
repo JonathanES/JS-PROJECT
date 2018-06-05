@@ -52,9 +52,10 @@ class Comment extends Component {
         url: this.state.videos,
         comment: this.state.comment
       })
+    }).then(() => {
+      this.componentDidMount();
     });
     event.preventDefault();
-    this.componentDidMount();
   }
 
   render() {

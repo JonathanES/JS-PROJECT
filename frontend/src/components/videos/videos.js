@@ -15,6 +15,7 @@ class Videos extends Component {
       views: 0
     };
     this._onStateChange = this._onStateChange.bind(this);
+    this.updateViews = this.updateViews.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -63,6 +64,23 @@ class Videos extends Component {
       });
   }
 
+  updateViews(){
+    if (this.state.isLogin) {
+      fetch('/api/history/' + this.state.user.id_user + '/' + this.state.videos)
+        .then(res => res.json())
+        .then(userviews => {
+          if (userviews.status !== 'failure')
+            this.setState({ user_view: parseInt(userviews.data.count, 10) })
+        });
+    }
+    fetch('/api/history/views/' + this.state.videos)
+      .then(res => res.json())
+      .then(views => {
+        if (views.status !== 'failure')
+          this.setState({ views: parseInt(views.data.count, 10) })
+      });
+  }
+
 
   _onReady(event) {
     // access to player in all event handlers via event.target
@@ -84,6 +102,8 @@ class Videos extends Component {
             url: this.props.id,
             iduser: this.props.user.id_user
           })
+        }).then(() => {
+          this.componentDidMount();
         });
       else
         fetch('/api/history', {
@@ -96,8 +116,9 @@ class Videos extends Component {
             url: this.props.id,
             iduser: this.props.guest.id_user
           })
+        }).then(() => {
+          this.componentDidMount();
         });
-      this.componentDidMount();
     }
   }
   render() {

@@ -45,9 +45,10 @@ class Favorite extends Component {
                 iduser: this.state.user.id_user,
                 url: this.state.videos
             })
+        }).then(() => {
+            this.componentDidMount();
         })
         event.preventDefault();
-        this.componentDidMount();
     }
 
     render() {
