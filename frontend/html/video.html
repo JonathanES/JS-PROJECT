@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>LoopTube - Video</title>
+        <link rel="icon" href="Images/favicon.png">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <div class="header">
+            <img id="logo" src="./Images/looptube_logo.svg" />
+            <input id="search-bar" type="text" placeholder="Rechercher une vidéo"/>
+            <button id="search-button"></button>
+            <div class="links">
+                <a href="#">Mes vidéos </a>
+                <a href="#" class="red">Déconnexion</a>
+            </div>
+        </div>
+
+        <div class="contain">
+            <div class="yt-player">
+                <iframe src="https://www.youtube.com/embed/YXrxuMQlVbQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <button class="btn-favorite uppercase">Ajouter aux favoris</button>
+            <hr />
+            <div class="comments-space">
+                <h3>Commentaires (<span class="red">2</span>)</h3>
+
+                <div class="comment">
+                    <div class="comment-header">
+                        <p class="author"> Claire </p>
+                        <p class="date"> Le 06/04/2018 à 20:17</p>
+                    </div>
+                    <div class="comment-content">
+                        <p>J'adore ce tuto haha, je l'écoute en boucle ! Merci looptube ;)</p>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <div class="comment-header">
+                        <p class="author"> Tim </p>
+                        <p class="date"> Le 06/04/2018 à 20:53</p>
+                    </div>
+                    <div class="comment-content">
+                        <p>J'entend parler du javascript à répétition, je n'en peux plus ! Il faut que cela cesse. Vous ne pouvez pas censurer ce genre de vidéo pour rendre le monde meilleur ? En dehors de ça, super site !</p>
+                    </div>
+                </div>
+
+                <div class="post-comment">
+                    <label for="ta-comment">Vous pouvez poster un commentaire !</label>
+                    <textarea id="ta-comment" rows="5"></textarea>
+                    <button class="btn btn-send uppercase">Envoyer</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
