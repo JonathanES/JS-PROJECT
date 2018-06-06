@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { bake_cookie, read_cookie } from 'sfcookies';
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
 import './login.css';
+import moment from 'moment';
 
 class Login extends Component {
   constructor(props) {
@@ -10,10 +11,19 @@ class Login extends Component {
       email: '',
       password: '',
       id_user: '',
-      cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user') }
+      cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user'), expire: read_cookie('expire') }
     };
-    if (Object.keys(this.state.cookies).length > 0)
-      this.props.login({ isLogin: this.state.cookies.isLogin, user: this.state.cookies.user.data });
+    let d = new Date();
+    d = moment(d,"YYYY-MM-DD HH:mm");
+    if (this.state.cookies.expire.length > 0)
+      if (d.diff(this.state.cookies.expire,'minutes') < 0)
+        this.props.login({ isLogin: true, user: this.state.cookies.user.data });
+      else{
+        delete_cookie('isLogin');
+        delete_cookie('user');
+        delete_cookie('expire');
+      }
+    
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -43,6 +53,10 @@ class Login extends Component {
             that.props.login({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: that.state.id_user } });
             bake_cookie('user', user);
             bake_cookie('isLogin', true);
+            let d = new Date();
+            d.setTime(d.getTime() + (20 * 60 * 1000));
+            d = moment(d,"YYYY-MM-DD HH:mm");
+            bake_cookie('expire', d);
             break;
           case "mail not found":
             alert("mail not found");
@@ -60,16 +74,27 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <h2>Login</h2>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Email:
-          <input id="email" type="text" value={this.state.email} onChange={this.handleChange} />
-            Password:
-          <input id="password" type="text" value={this.state.password} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <div class="window login">
+          <div class="window-header">
+            <h1 > Connexion </h1>
+          </div>
+          <div class="window-contain">
+            <form onSubmit={this.handleSubmit}>
+              <div class="form-group">
+                <div class="form-field">
+                  <label for="input-login">Email :</label>
+                  <input id="email" type="text" value={this.state.email} onChange={this.handleChange} />
+                </div>
+                <div class="form-field">
+                  <label for="input-pwd">Password :</label>
+                  <input id="password" type="text" value={this.state.password} onChange={this.handleChange} />
+                </div>
+                <button class="btn uppercase" type="submit">Se connecter</button>
+              </div>
+              <p class="account-help">Vous n'avez pas encore de compte ? <a class="underline red" >S'inscrire</a></p>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
