@@ -32,7 +32,14 @@ button {
 }
 .contain {
     display: block;
-    margin: 0 10vw;
+    margin: 40px 10vw 0;
+}
+.center {
+    text-align: center;
+}
+h3 {
+    font-size: 22px;
+    margin: 20px 0;
 }
 
 /***** Header *****/
@@ -121,22 +128,40 @@ button {
     font-weight: 600;
     color: white;
 }
-.btn-favorite {
-    display: block;
-    text-align: center;
+.btn-img {
     background-color: inherit;
     border: none;
-    background-image: url(Images/favorite-heart.svg);
     background-repeat: no-repeat;
     background-size: 24px;
     background-position-y: 6px;
     font-size: 18px;
     padding: 10px 10px 10px 35px;
+}
+.btn-favorite {
+    display: block;
+    text-align: center;
+    background-image: url(Images/favorite-heart.svg);
     margin: 10px auto 20px;
 }
 .btn-send {
     display: block;
     margin: 20px 0 10px auto;
+}
+.btn-delete-favorite {
+    background-image: url(Images/remove-favorite.svg);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.btn-delete-history {
+    margin: 20px 0;
+    background-color: inherit;
+    border: none;
+    font-size: 14px;
+    text-decoration: underline;
+    color: red;
+    float: right;
 }
 
 /* Forms */
@@ -182,6 +207,13 @@ hr {
     height: 506px;
     margin: 40px auto 10px;
 }
+.result-search {
+    margin: 60px 0;
+    font-size: 26px;
+}
+.history-title {
+    display: inline-block;
+}
 
 /* Comments */
 
@@ -190,7 +222,6 @@ hr {
 }
 .comments-space h3 {
     margin: 40px 0;
-    font-size: 22px;
 }
 .comments-space .comment {
     margin: 20px 0;
@@ -225,4 +256,76 @@ hr {
     margin: 0;
     font-family: 'Roboto';
     width: 95%;
+}
+
+/* Video searches */
+.search-container .yt-thumbnail {
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+    margin: 20px 50px;
+}
+.search-container .yt-thumbnail img {
+    width: 100%;
+    height: auto;
+}
+.search-container .yt-thumbnail p {
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Page selection */
+.pages-selection {
+    text-align: center;
+    margin: 20px 0 30px;
+}
+.pages-selection a {
+    display: inline-block;
+    margin: 0 10px 0;
+}
+.pages-selection img {
+    width: 18px;
+    height: 18px;
+}
+.pages-selection .page-number {
+    background-color: red;
+    padding: 15px;
+    border-radius: 4px;
+    color: white;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.55);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.55);
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.55);
+}
+.pages-selection .page-inter {
+    vertical-align: bottom;
+}
+
+/* Favorites videos and history */
+.myvideo-elt {
+    margin: 50px 0;
+    position: relative;
+}
+.myvideo-elt .my-yt-thumbnail {
+    display: inline-block;
+}
+.myvideo-elt .my-yt-thumbnail img {
+    width: 250px;
+    height: auto;
+}
+.myvideo-elt .infos {
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px 0 0 20px;
+}
+.myvideo-elt .infos .title{
+    font-weight: 600;
+}
+.myvideo-elt .infos .time{
+    font-style: italic;
+}
+.myvideo-elt p {
+    display: block;
+    color: black;
+    font-size: 16px;
+    margin: 0;
 }
