@@ -70,17 +70,17 @@ class Thumbnails extends Component {
                 })
             })
         else
-        fetch('/api/history', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                url: event.id,
-                iduser: this.state.guest.id_user
+            fetch('/api/history', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    url: event.id,
+                    iduser: this.state.guest.id_user
+                })
             })
-        })
         this.setState({ currentVideos: event.id });
         this.setState({ search: false });
     }
@@ -91,10 +91,9 @@ class Thumbnails extends Component {
                 <h2>Thumbnails</h2>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        Name:
-          <input type="text" value={this.state.value} onChange={this.handleChange} />
+                        <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Rechercher une vidéo" />
+                        <button type="submit"  id="search-button"></button>
                     </label>
-                    <input type="submit" value="Submit" />
                 </form>
                 {this.state.thumbnails.map(thumbnail =>
                     <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} /> {thumbnail.titles}</div>

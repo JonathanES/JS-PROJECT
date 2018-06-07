@@ -3,29 +3,53 @@ import './App.css';
 import Thumbnails from './components/thumbnails/thumbnails';
 import CreateAccount from './components/createAccount/createAccount';
 import Login from './components/login/login'
+import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-        search: true,
-        isLogin: false,
-        user: {},
-        guest: {}
+      search: true,
+      isLogin: false,
+      user: {},
+      guest: {},
+      tryToLogin: false,
+      tryToCreateAccount: false
     };
+    this.handleClick = this.handleClick.bind(this);
   }
   changeStuff(data) {
-    this.setState({isLogin: data.isLogin, user: data.user});
+    this.setState({ isLogin: data.isLogin, user: data.user });
   }
 
-  componentWillMount(){
+  handleClick(id,event) {
+    switch (id) {
+      case "connect":
+        this.setState({ tryToLogin: true });
+        break;
+      case "disconnect":
+        this.setState({ tryToLogin: false, user: {}, isLogin: false });
+        delete_cookie('isLogin');
+        delete_cookie('user');
+        delete_cookie('expire');
+        break;
+
+      default:
+        break;
+    }
+
+    event.preventDefault();
+  }
+
+  componentWillMount() {
     const that = this;
     fetch('/api/user/email/guest@gmail.com/pwd')
       .then(res => res.json())
       .then(function (user) {
         switch (user.status) {
           case "success":
-          let obj = {email: user.data.email, password: user.data.password, pseudo: user.data.pseudo, id_user: user.data.id}
+            let obj = { email: user.data.email, password: user.data.password, pseudo: user.data.pseudo, id_user: user.data.id }
             that.setState({ guest: obj });
             break;
           case "mail not found":
@@ -42,11 +66,22 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-
-     <CreateAccount />
-      {this.state.isLogin ===  false && <Login login={this.changeStuff.bind(this)} />}
-      <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest}/> 
+      <div>
+        <div class="header">
+          <img id="logo" src="./Images/looptube_logo.svg" />
+          <input id="search-bar" type="text" placeholder="Rechercher une vidéo" />
+          <button id="search-button"></button>
+          <div class="links">
+            {this.state.isLogin === false && <a href="#" onClick={(e) => this.handleClick("connect",e)} id="connect" >Se connecter</a>}
+            {this.state.isLogin === true && <a class="red" href="#" onClick={(e) => this.handleClick("disconnect",e)} id="disconnect">Se déconnecter</a>}
+            <a href="#" class="red">S'inscrire</a>
+          </div>
+        </div>
+        <div>
+          <CreateAccount />
+          {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
+          <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest} />
+        </div>
       </div>
     );
   }

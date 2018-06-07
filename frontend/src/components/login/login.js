@@ -50,7 +50,7 @@ class Login extends Component {
         switch (user.status) {
           case "success":
             that.setState({ email: user.data.email, password: user.data.password, pseudo: user.data.pseudo, id_user: user.data.id });
-            that.props.login({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: that.state.id_user } });
+            that.props.login({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: that.state.id_user }, tryToLogin: false });
             bake_cookie('user', user);
             bake_cookie('isLogin', true);
             let d = new Date();
