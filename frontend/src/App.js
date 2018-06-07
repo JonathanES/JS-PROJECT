@@ -15,15 +15,20 @@ class App extends Component {
       user: {},
       guest: {},
       tryToLogin: false,
-      tryToCreateAccount: false
+      tryToCreateAccount: false,
+      register: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
   changeStuff(data) {
     this.setState({ isLogin: data.isLogin, user: data.user });
   }
+  changeRegister(data) {
+    this.setState({isLogin: data.isLogin, user: data.user, register: data.register });
+  }
 
-  handleClick(id,event) {
+
+  handleClick(id, event) {
     switch (id) {
       case "connect":
         this.setState({ tryToLogin: true });
@@ -34,7 +39,9 @@ class App extends Component {
         delete_cookie('user');
         delete_cookie('expire');
         break;
-
+      case "register":
+        this.setState({ register: true });
+        break;
       default:
         break;
     }
@@ -72,13 +79,13 @@ class App extends Component {
           <input id="search-bar" type="text" placeholder="Rechercher une vidéo" />
           <button id="search-button"></button>
           <div class="links">
-            {this.state.isLogin === false && <a href="#" onClick={(e) => this.handleClick("connect",e)} id="connect" >Se connecter</a>}
-            {this.state.isLogin === true && <a class="red" href="#" onClick={(e) => this.handleClick("disconnect",e)} id="disconnect">Se déconnecter</a>}
-            <a href="#" class="red">S'inscrire</a>
+            {this.state.isLogin === false && <a href="#" onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
+            {this.state.isLogin === true && <a class="red" href="#" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
+            {this.state.isLogin === false && this.state.register === false && <a href="#" class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
           </div>
         </div>
         <div>
-          <CreateAccount />
+          {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)}/>}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
           <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest} />
         </div>
