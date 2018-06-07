@@ -54,6 +54,18 @@ button {
     color: white;
     margin: 10px 30px;
 }
+
+.header #search{
+    vertical-align: top;
+    margin: 9px 0 0 30px;
+    height: 30px;
+    padding: 5px 20px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: none;
+    width: 35%;
+}
+
 .header #search-bar{
     vertical-align: top;
     margin: 9px 0 0 30px;

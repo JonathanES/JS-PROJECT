@@ -9,8 +9,8 @@ class Thumbnails extends Component {
         super(props);
         this.state = {
             customers: [],
-            thumbnails: [],
-            value: "",
+            thumbnails: props.thumbnails,
+            value: props.searchValue,
             search: true,
             currentVideos: "",
             user: props.user,
@@ -18,30 +18,23 @@ class Thumbnails extends Component {
             isLogin: props.login
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
     static getDerivedStateFromProps(props, state) {
-        if (props.user === state.user && props.login === state.isLogin && props.guest === state.guest)
+        if (props.user === state.user && props.login === state.isLogin && props.guest === state.guest && props.thumbnails === state.thumbnails && props.searchValue === state.value)
             return null;
         return {
             user: props.user,
             isLogin: props.login,
-            guest: props.guest
+            guest: props.guest,
+            thumbnails: props.thumbnails,
+            value: props.searchValue
         }
     }
 
     handleChange(event) {
         this.setState({ value: event.target.value });
-    }
-
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        fetch('/api/repeat/' + this.state.value)
-            .then(res => res.json())
-            .then(thumbnails => this.setState({ thumbnails }, () => console.log('Customers fetched...', thumbnails)));
-        event.preventDefault();
     }
 
     handleClick(event) {
@@ -88,16 +81,16 @@ class Thumbnails extends Component {
     render() {
         return (
             <div>
-                <h2>Thumbnails</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Rechercher une vidéo" />
-                        <button type="submit"  id="search-button"></button>
-                    </label>
-                </form>
-                {this.state.thumbnails.map(thumbnail =>
-                    <div key={thumbnail.id}> <img id={thumbnail.id} src={thumbnail.url} style={{ height: 90, width: 120 }} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} /> {thumbnail.titles}</div>
+                <h3 class="center result-search">Résultat de votre recherche "<span class="red">{this.state.value}</span>"</h3>
+                <div class="search-container">
+                    {this.state.thumbnails.map(thumbnail =>
+                        <a key={thumbnail.id} class="yt-thumbnail" href="#">
+                            <img id={thumbnail.id} src={thumbnail.url} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} /> 
+                            <p> {thumbnail.titles}</p>
+                        </a>
                 )}
+
+                </div>
                 {this.state.search === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} />}
                 {this.state.search === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
                 {this.state.search === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}

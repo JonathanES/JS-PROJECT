@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Login from '../login/login'
 import './createAccount.css';
 import moment from 'moment';
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+import { bake_cookie } from 'sfcookies';
 
 
 class CreateAccount extends Component {
@@ -56,6 +55,7 @@ class CreateAccount extends Component {
             that.props.register({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: user.data.id }, tryToLogin: false, register: false });
             bake_cookie('user', user);
             bake_cookie('isLogin', true);
+            bake_cookie('register',false);
             let d = new Date();
             d.setTime(d.getTime() + (20 * 60 * 1000));
             d = moment(d,"YYYY-MM-DD HH:mm");
@@ -104,7 +104,7 @@ class CreateAccount extends Component {
                 <button type="submit" class="btn uppercase">S'inscrire</button>
               </form>
             </div>
-            <p class="account-help">Vous avez déjà un compte ? <a class="underline red" href="#">Se connecter</a></p>
+            <p class="account-help">Vous avez déjà un compte ? <a class="underline red" >Se connecter</a></p>
           </div>
         </div>
       </div>

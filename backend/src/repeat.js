@@ -35,7 +35,7 @@ function getVideos(req, res, next) {
             const item = response.data.items[elt];
             thumbnails.push({
                 id: item.id.videoId,
-                url:item.snippet.thumbnails.default.url,
+                url:item.snippet.thumbnails.high.url,
                 titles: item.snippet.title
             });
         }

@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
+import Search from './components/search/search';
 import Thumbnails from './components/thumbnails/thumbnails';
 import CreateAccount from './components/createAccount/createAccount';
 import Login from './components/login/login'
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+import {read_cookie, delete_cookie } from 'sfcookies';
+import moment from 'moment';
+
 
 
 class App extends Component {
@@ -16,12 +19,31 @@ class App extends Component {
       guest: {},
       tryToLogin: false,
       tryToCreateAccount: false,
-      register: false
+      register: false,
+      thumbnails: [],
+      searchValue: "",
+      cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user'), expire: read_cookie('expire'), register: read_cookie('register') }
     };
+
+    let d = new Date();
+    d = moment(d,"YYYY-MM-DD HH:mm");
+    if (this.state.cookies.expire.length > 0)
+      if (d.diff(this.state.cookies.expire,'minutes') < 0)
+        this.setState({ isLogin: this.state.cookies.isLogin, user: this.state.cookies.user, register: this.state.cookies.register });
+      else{
+        delete_cookie('isLogin');
+        delete_cookie('user');
+        delete_cookie('expire');
+        delete_cookie('register');
+      }
+
     this.handleClick = this.handleClick.bind(this);
   }
   changeStuff(data) {
     this.setState({ isLogin: data.isLogin, user: data.user });
+  }
+  changeThumbnail(data) {
+    this.setState({thumbnails: data.thumbnails, searchValue: data.searchValue });
   }
   changeRegister(data) {
     this.setState({isLogin: data.isLogin, user: data.user, register: data.register });
@@ -75,19 +97,19 @@ class App extends Component {
     return (
       <div>
         <div class="header">
-          <img id="logo" src="./Images/looptube_logo.svg" />
-          <input id="search-bar" type="text" placeholder="Rechercher une vidéo" />
-          <button id="search-button"></button>
+          <img id="logo" src="./Images/looptube_logo.svg" alt="logo"/>
+          
           <div class="links">
-            {this.state.isLogin === false && <a href="#" onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
-            {this.state.isLogin === true && <a class="red" href="#" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
-            {this.state.isLogin === false && this.state.register === false && <a href="#" class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
+            {this.state.isLogin === false && <a  onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
+            {this.state.isLogin === true && <a class="red"  onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
+            {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
           </div>
+          <Search id="search" thumbnails={this.changeThumbnail.bind(this)} />
         </div>
         <div>
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)}/>}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
-          <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest} />
+          <Thumbnails login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue}/>          
         </div>
       </div>
     );

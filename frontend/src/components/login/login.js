@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { bake_cookie, read_cookie, delete_cookie } from 'sfcookies';
+import { bake_cookie, read_cookie } from 'sfcookies';
 import './login.css';
 import moment from 'moment';
 
@@ -13,16 +13,6 @@ class Login extends Component {
       id_user: '',
       cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user'), expire: read_cookie('expire') }
     };
-    let d = new Date();
-    d = moment(d,"YYYY-MM-DD HH:mm");
-    if (this.state.cookies.expire.length > 0)
-      if (d.diff(this.state.cookies.expire,'minutes') < 0)
-        this.props.login({ isLogin: true, user: this.state.cookies.user.data });
-      else{
-        delete_cookie('isLogin');
-        delete_cookie('user');
-        delete_cookie('expire');
-      }
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,6 +43,7 @@ class Login extends Component {
             that.props.login({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: that.state.id_user }, tryToLogin: false });
             bake_cookie('user', user);
             bake_cookie('isLogin', true);
+            bake_cookie('register',false);
             let d = new Date();
             d.setTime(d.getTime() + (20 * 60 * 1000));
             d = moment(d,"YYYY-MM-DD HH:mm");
