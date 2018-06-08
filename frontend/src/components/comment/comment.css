@@ -1,0 +1,42 @@
+/* Comments */
+
+.comments-space {
+    padding: 0 5vw;
+}
+.comments-space h3 {
+    margin: 40px 0;
+}
+.comments-space .comment {
+    margin: 20px 0;
+    padding: 15px 40px;
+    background-color: white;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+}
+.comment .comment-header p {
+    display: inline-block;
+}
+.comment .comment-header .author {
+    font-weight: 600;
+}
+.comment .comment-header .date {
+    font-style: italic;
+    float: right;
+}
+.post-comment label {
+    margin: 40px 10px 20px 0;
+    font-weight: 600;
+    display: block;
+}
+.post-comment #ta-comment {
+    display: block;
+    background-color: white;
+    border: solid 1px #999999;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 0;
+    font-family: 'Roboto';
+    width: 95%;
+}

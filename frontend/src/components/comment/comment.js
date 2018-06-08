@@ -14,22 +14,22 @@ class Comment extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  static getDerivedStateFromProps(props, state){
+  static getDerivedStateFromProps(props, state) {
     if (props.user === state.user && props.videos === state.videos)
       return null;
     return {
       user: props.user,
       videos: props.videos
-    }    
+    }
   }
 
- componentDidUpdate(prevProps, prevState){
-    if (prevState.videos !== this.state.videos){
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.videos !== this.state.videos) {
       fetch('/api/comment/' + this.state.videos)
-      .then(res => res.json())
-      .then(comments => this.setState({ comments: comments.data }, () => console.log('Customers fetched...', comments)));
-    } 
- } 
+        .then(res => res.json())
+        .then(comments => this.setState({ comments: comments.data }, () => console.log('Customers fetched...', comments)));
+    }
+  }
   componentDidMount() {
     fetch('/api/comment/' + this.state.videos)
       .then(res => res.json())
@@ -61,12 +61,27 @@ class Comment extends Component {
   render() {
     return (
       <div>
-        <h2>Comment</h2>
-        {this.state.comments.map(comment => <div><div> {comment.pseudo}  </div> <div>{comment.datepost} </div> <div> {comment.comment}  </div> </div>)}
-        <form onSubmit={this.handleSubmit} id="usrform">
-          <textarea value={this.state.comment} onChange={this.handleChange} />
-          <input type="submit" value="Submit" />
-        </form>
+        <div class="comments-space">
+          <h3>Commentaires (<span class="red">{this.state.comments.length}</span>)</h3>
+          {this.state.comments.map(comment =>
+            <div class="comment">
+              <div class="comment-header">
+                <p class="author"> {comment.pseudo} </p>
+                <p class="date"> {comment.datepost} </p>
+              </div>
+              <div class="comment-content">
+                <p>{comment.comment}</p>
+              </div>
+            </div>
+          )}
+          <div class="post-comment">
+            <form onSubmit={this.handleSubmit} id="usrform">
+              <label for="ta-comment">Vous pouvez poster un commentaire !</label>
+              <textarea value={this.state.comment} onChange={this.handleChange} id="ta-comment" rows="5" />
+              <button type="submit" class="btn btn-send uppercase">Envoyer</button>
+            </form>
+          </div>
+        </div>
       </div>
     );
   }

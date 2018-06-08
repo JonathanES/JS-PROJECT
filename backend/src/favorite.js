@@ -31,12 +31,14 @@ function getAllFavorite(req, res, next) {
 
 function getSingleFavorite(req, res, next) {
     const id = req.params.id;
-    db.one('select count(1) from t_favorite where id_videos = $1', id)
+    const id_user = req.params.id_user;
+    db.one('select count(1) from t_favorite where id_videos = $1 and id_user = $2', [id,id_user])
         .then(function (data) {
+            let bool = (data.count === "1") ? true : false;
             res.status(200)
                 .json({
                     status: 'success',
-                    data: data,
+                    data: bool,
                     message: 'Retrieved ONE ELT'
                 });
         })
@@ -123,7 +125,8 @@ function createFavorite(req, res, next) {
 
 function removeFavorite(req, res, next) {
     const url = req.params.id;
-    db.result('delete from t_favorite where id_videos = $1', url)
+    const id_user = req.params.id_user;
+    db.result('delete from t_favorite where id_videos = $1 and id_user = $2', [url,id_user])
         .then(function (result) {
             res.status(200)
                 .json({

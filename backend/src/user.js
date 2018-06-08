@@ -63,7 +63,7 @@ function getSingleUserByEmail(req, res, next) {
     const pwd = req.params.pwd;
     db.one('select * from t_user where email = $1', mail)
         .then(function () {
-            db.one('select * from t_user where email = $1 and password = $2', [mail, pwd])
+            db.one('select id as id_user, email, password, pseudo from t_user where email = $1 and password = $2', [mail, pwd])
                 .then(function (data) {
                     data.password = data.password.replace(/\s/g, '');
                     res.status(200)

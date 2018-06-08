@@ -21,7 +21,7 @@ class Search extends Component {
         alert('A name was submitted: ' + this.state.value);
         fetch('/api/repeat/' + this.state.value)
             .then(res => res.json())
-            .then(thumbnails => this.setState({ thumbnails }, () => that.props.thumbnails({ thumbnails: thumbnails, searchValue: this.state.value })));
+            .then(thumbnails => this.setState({ thumbnails }, () => that.props.thumbnails({ thumbnails: thumbnails, searchValue: this.state.value, currentVideos: "" })));
         event.preventDefault();
     }
 

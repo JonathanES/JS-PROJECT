@@ -64,7 +64,7 @@ class Videos extends Component {
       });
   }
 
-  updateViews(){
+  updateViews() {
     if (this.state.isLogin) {
       fetch('/api/history/' + this.state.user.id_user + '/' + this.state.videos)
         .then(res => res.json())
@@ -131,13 +131,16 @@ class Videos extends Component {
     };
     return (
       <div>
-        <YouTube
-          videoId={this.props.id}
-          opts={opts}
-          onReady={this._onReady}
-          onStateChange={this._onStateChange}
-        />
-        <Views login={this.state.isLogin} userviews={this.state.user_view} views={this.state.views} />
+        <div class="yt-player">
+          <YouTube
+            videoId={this.props.id}
+            opts={opts}
+            onReady={this._onReady}
+            onStateChange={this._onStateChange}
+          />
+          <Views login={this.state.isLogin} userviews={this.state.user_view} views={this.state.views} />
+
+        </div>
       </div>
     );
   }

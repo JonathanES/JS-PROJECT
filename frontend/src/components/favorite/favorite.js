@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './favorite.css'
 
 class Favorite extends Component {
     constructor(props) {
@@ -6,7 +7,7 @@ class Favorite extends Component {
         this.state = {
             user: props.user,
             videos: props.videos,
-            favorite: 0
+            favorite: false
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -20,44 +21,48 @@ class Favorite extends Component {
     }
     componentDidUpdate(prevProps, prevState) {
         if (prevState.videos !== this.state.videos || prevState.favorite !== this.state.favorite) {
-            fetch('/api/favorite/' + this.state.videos)
+            fetch('/api/favorite/' + this.state.videos + '/' + this.state.user.id_user)
                 .then(res => res.json())
-                .then(favorites => this.setState({ favorite: favorites.data.count }));
+                .then(favorites => this.setState({ favorite: favorites.data }));
         }
     }
     componentDidMount() {
-        const update = () => {
-            fetch('/api/favorite/' + this.state.videos)
-                .then(res => res.json())
-                .then(favorites => this.setState({ favorite: favorites.data.count }));
-        }
-        update();
+        fetch('/api/favorite/' + this.state.videos + '/' + this.state.user.id_user)
+            .then(res => res.json())
+            .then(favorites => this.setState({ favorite: favorites.data }));
     }
 
     handleClick(event) {
-        fetch('/api/favorite', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                iduser: this.state.user.id_user,
-                url: this.state.videos
+        const that = this;
+        if (!this.state.favorite)
+            fetch('/api/favorite', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    iduser: this.state.user.id_user,
+                    url: this.state.videos
+                })
+            }).then(() => {
+                that.setState({ favorite: true });
             })
-        }).then(() => {
-            this.componentDidMount();
-        })
+        else
+            fetch('/api/favorite/' + this.state.videos + '/' + this.state.user.id_user, {
+                method: 'DELETE'
+            })
+                .then(() => {
+                    that.setState({ favorite: false });
+                })
+
         event.preventDefault();
     }
 
     render() {
         return (
             <div>
-                <button onClick={this.handleClick}>
-                    Add favorite
-                </button>
-                {this.state.favorite}
+                <button onClick={this.handleClick} class={this.state.favorite ? "btn-img btn-favorite uppercase" : "btn-img btn-delete-favorite uppercase"}>Ajouter aux favoris</button>
             </div>
         );
     }

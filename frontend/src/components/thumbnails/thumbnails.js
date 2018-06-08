@@ -49,7 +49,15 @@ class Thumbnails extends Component {
                 url: event.id,
                 name: event.titles
             })
-        });
+        })
+            .then(() => {
+                this.setState({ currentVideos: event.id });
+                this.setState({ search: false });
+
+            })
+            .then(() => {
+                this.props.videos({ currentVideos: this.state.currentVideos, search: this.state.search });
+            });
         if (this.state.isLogin)
             fetch('/api/history', {
                 method: 'POST',
@@ -74,8 +82,6 @@ class Thumbnails extends Component {
                     iduser: this.state.guest.id_user
                 })
             })
-        this.setState({ currentVideos: event.id });
-        this.setState({ search: false });
     }
 
     render() {
@@ -85,15 +91,12 @@ class Thumbnails extends Component {
                 <div class="search-container">
                     {this.state.thumbnails.map(thumbnail =>
                         <a key={thumbnail.id} class="yt-thumbnail" href="#">
-                            <img id={thumbnail.id} src={thumbnail.url} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} /> 
+                            <img id={thumbnail.id} src={thumbnail.url} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} />
                             <p> {thumbnail.titles}</p>
                         </a>
-                )}
+                    )}
 
                 </div>
-                {this.state.search === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} />}
-                {this.state.search === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
-                {this.state.search === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
             </div>
         );
     }
