@@ -14,7 +14,8 @@ CREATE TABLE T_User (
 
 CREATE TABLE T_Videos (
   URL				VARCHAR(256)             PRIMARY KEY NOT NULL ,
-  Name      VARCHAR(128)             NOT NULL
+  Name      VARCHAR(128)             NOT NULL,
+  Thumbnail	VARCHAR(256) 
 );
 
 
@@ -22,7 +23,8 @@ CREATE TABLE T_History (
   Id               SERIAL           PRIMARY KEY NOT NULL,
   URL				        VARCHAR(256)    NOT NULL references T_Videos (URL) ,
   Id_user           BIGINT          NOT NULL references T_User (Id),
-  DatePost          TIMESTAMP       NOT NULL
+  DatePost          TIMESTAMP       NOT NULL,
+  Thumbnail	        VARCHAR(256) 
 );
 
 CREATE TABLE T_Favorite (
