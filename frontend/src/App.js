@@ -9,8 +9,7 @@ import moment from 'moment';
 import Videos from './components/videos/videos';
 import Comment from './components/comment/comment';
 import Favorite from './components/favorite/favorite';
-
-
+import Account from './components/account/account';
 
 class App extends Component {
   constructor() {
@@ -26,6 +25,7 @@ class App extends Component {
       thumbnails: [],
       searchValue: "",
       currentVideos: "",
+      account: false,
       cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user'), expire: read_cookie('expire'), register: read_cookie('register') }
     };
 
@@ -35,7 +35,7 @@ class App extends Component {
     this.setState({ isLogin: data.isLogin, user: data.user });
   }
   changeThumbnail(data) {
-    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos });
+    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account:data.account });
   }
   changeRegister(data) {
     this.setState({ isLogin: data.isLogin, user: data.user, register: data.register });
@@ -58,6 +58,9 @@ class App extends Component {
         break;
       case "register":
         this.setState({ register: true });
+        break;
+      case "account":
+        this.state.account ? this.setState({ account: false }) : this.setState({ account: true });
         break;
       default:
         break;
@@ -86,19 +89,19 @@ class App extends Component {
             break;
         }
       });
-      let d = new Date();
-      d = moment(d, "YYYY-MM-DD HH:mm");
-      console.log(this.state.cookies.expire.length > 0);
-      console.log((d.diff(this.state.cookies.expire, 'minutes') < 0));
-      if (this.state.cookies.expire.length > 0)
-        if (d.diff(this.state.cookies.expire, 'minutes') < 0)
-          this.setState({ isLogin: this.state.cookies.isLogin, user: this.state.cookies.user.data, register: this.state.cookies.register });
-        else {
-          delete_cookie('isLogin');
-          delete_cookie('user');
-          delete_cookie('expire');
-          delete_cookie('register');
-        }
+    let d = new Date();
+    d = moment(d, "YYYY-MM-DD HH:mm");
+    console.log(this.state.cookies.expire.length > 0);
+    console.log((d.diff(this.state.cookies.expire, 'minutes') < 0));
+    if (this.state.cookies.expire.length > 0)
+      if (d.diff(this.state.cookies.expire, 'minutes') < 0)
+        this.setState({ isLogin: this.state.cookies.isLogin, user: this.state.cookies.user.data, register: this.state.cookies.register });
+      else {
+        delete_cookie('isLogin');
+        delete_cookie('user');
+        delete_cookie('expire');
+        delete_cookie('register');
+      }
   }
 
   render() {
@@ -109,18 +112,20 @@ class App extends Component {
 
           <div class="links">
             {this.state.isLogin === false && <a onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
+            {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account" href="#">Mes vidéos </a>}
             {this.state.isLogin === true && <a class="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
             {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
           </div>
           <Search id="search" thumbnails={this.changeThumbnail.bind(this)} />
         </div>
         <div>
+          {this.state.account === true && <Account user={this.state.user}/>}
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
           {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
-          {this.state.search === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} />}
-          {this.state.search === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
-          {this.state.search === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
+          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} />}
+          {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
+          {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
         </div>
       </div>
     );

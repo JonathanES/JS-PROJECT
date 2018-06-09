@@ -10,7 +10,8 @@ module.exports = {
 };
 
 function getAllFavorite(req, res, next) {
-    db.any('select * from t_favorite')
+    const id_user = req.params.id_user;
+    db.any('SELECT id_videos, name, thumbnail FROM t_favorite,t_videos where id_videos = t_videos.url and id_user = $1',id_user)
         .then(function (data) {
             res.status(200)
                 .json({

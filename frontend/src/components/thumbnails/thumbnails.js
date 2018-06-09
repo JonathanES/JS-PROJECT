@@ -38,7 +38,6 @@ class Thumbnails extends Component {
     }
 
     handleClick(event) {
-        alert('a picture was clicked on' + event);
         fetch('/api/videos', {
             method: 'POST',
             headers: {
@@ -47,7 +46,9 @@ class Thumbnails extends Component {
             },
             body: JSON.stringify({
                 url: event.id,
-                name: event.titles
+                name: event.titles,
+                thumbnail: event.url
+
             })
         })
             .then(() => {
@@ -67,7 +68,8 @@ class Thumbnails extends Component {
                 },
                 body: JSON.stringify({
                     url: event.id,
-                    iduser: this.state.user.id_user
+                    iduser: this.state.user.id_user,
+                    thumbnail: event.url
                 })
             })
         else
@@ -79,7 +81,8 @@ class Thumbnails extends Component {
                 },
                 body: JSON.stringify({
                     url: event.id,
-                    iduser: this.state.guest.id_user
+                    iduser: this.state.guest.id_user,
+                    thumbnail: event.url
                 })
             })
     }

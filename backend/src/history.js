@@ -59,7 +59,7 @@ function getSingleHistory(req, res, next) {
 // $FlowFixMe
 function getAllHistoryUser(req, res, next) {
     const id = parseInt(req.params.id);
-    db.any('select * from t_history where id_user = $1', id)
+    db.any('select t_history.url, t_history.thumbnail,name from t_history, t_videos where t_history.url = t_videos.url and id_user = $1', id)
         .then(function (data) {
             res.status(200)
                 .json({
@@ -101,6 +101,7 @@ async function checkHistory(idUser, url) {
 function createHistory(req, res, next) {
     const idUser = parseInt(req.body.iduser);
     const url = req.body.url;
+    const thumbnail = req.body.thumbnail;
     const prom = new Promise((resolve, reject) => {
         checkHistory(idUser, url).then(function (value) {
             if (value != null)
@@ -112,7 +113,7 @@ function createHistory(req, res, next) {
     prom.then(function (check) {
         if (check) {
             db.none('insert into t_history'
-                + ' values(default,$1,' + idUser + ', now())', url)
+                + ' values(default,$1,' + idUser + ', now(), $2)' , [url,thumbnail])
                 .then(function () {
                     res.status(200);
                     res.redirect('/models/history');

@@ -18,10 +18,9 @@ class Search extends Component {
 
     handleSubmit(event) {
         const that = this;
-        alert('A name was submitted: ' + this.state.value);
         fetch('/api/repeat/' + this.state.value)
             .then(res => res.json())
-            .then(thumbnails => this.setState({ thumbnails }, () => that.props.thumbnails({ thumbnails: thumbnails, searchValue: this.state.value, currentVideos: "" })));
+            .then(thumbnails => this.setState({ thumbnails }, () => that.props.thumbnails({ thumbnails: thumbnails, searchValue: this.state.value, currentVideos: "",account: false })));
         event.preventDefault();
     }
 

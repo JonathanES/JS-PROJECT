@@ -51,8 +51,8 @@ function getSingleVideos(req, res, next) {
 }
 
 function createVideos(req, res, next) {
-    db.none('insert into t_videos(url,name)' +
-        'values(${url}, ${name})',
+    db.none('insert into t_videos(url,name,thumbnail)' +
+        'values(${url}, ${name}, ${thumbnail})',
         req.body)
         .then(function () {
             res.status(200).json({

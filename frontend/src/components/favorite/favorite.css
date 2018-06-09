@@ -28,11 +28,10 @@
     margin: 20px 0 10px auto;
 }
 .btn-delete-favorite {
+    display: block;
+    text-align: center;
     background-image: url(../../Images/remove-favorite.svg);
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    margin: 10px auto 20px;
 }
 .btn-delete-history {
     margin: 20px 0;
