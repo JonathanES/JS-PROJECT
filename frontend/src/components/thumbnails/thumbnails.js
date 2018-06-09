@@ -55,7 +55,7 @@ class Thumbnails extends Component {
                 this.setState({ search: false });
 
             }).then(() => {
-                this.props.videos({ currentVideos: this.state.currentVideos, search: this.state.search });
+                this.props.videos({ currentVideos: this.state.currentVideos, search: this.state.search, currentThumbnail: event.url });
             });
         if (this.state.isLogin)
             fetch('/api/history', {

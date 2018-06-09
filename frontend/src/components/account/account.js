@@ -11,6 +11,7 @@ class Account extends Component {
             history: []
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleClick(id, event) {
@@ -27,6 +28,16 @@ class Account extends Component {
         }
     }
 
+    handleDelete(id, event) {
+        const that = this;
+        fetch('/api/favorite/' + event.id_videos + '/' + this.state.user.id_user, {
+            method: 'DELETE'
+        });
+        fetch('/api/favorite/' + this.state.user.id_user)
+        .then(res => res.json())
+        .then(favorites => this.setState({ favorites: favorites.data }));
+    }
+
     static getDerivedStateFromProps(props, state) {
         if (props.user === state.user && props.videos === state.videos)
             return null;
@@ -39,7 +50,7 @@ class Account extends Component {
         if (prevState.favorites !== this.state.favorites) {
             fetch('/api/favorite/' + this.state.user.id_user)
                 .then(res => res.json())
-                .then(favorites => this.setState({ favorite: favorites.data }));
+                .then(favorites => this.setState({ favorites: favorites.data }));
         }
         if (prevState.history !== this.state.history) {
             fetch('/api/history/user/' + this.state.user.id_user)
@@ -72,7 +83,7 @@ class Account extends Component {
                                 <p class="title"> {favorite.name} </p>
                                 <p class="time"> 13:32 </p>
                             </div>
-                            <button class="btn-img btn-delete-favorite uppercase"> Retirer des favoris</button>
+                            <button class="btn-img btn-delete-favorite uppercase" id={favorite.id_videos} onClick={() => this.handleDelete("", favorite)}> Retirer des favoris</button>
                         </div>
                     )}
                 </div>
@@ -83,7 +94,7 @@ class Account extends Component {
                     {this.state.history.map(history =>
                         <div class="myvideo-elt">
                             <a class="my-yt-thumbnail" href="#">
-                                <img id={history.id_videos} src={history.thumbnail} alt={history.id_videos} onClick={() => this.handleClick("", history)}/>
+                                <img src={history.thumbnail} alt={history.id_videos} onClick={() => this.handleClick("", history)} />
                             </a>
                             <div class="infos">
                                 <p class="title"> {history.name}</p>

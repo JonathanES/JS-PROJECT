@@ -11,6 +11,7 @@ class Videos extends Component {
       guest: props.guest,
       videos: props.id,
       isLogin: props.login,
+      thumbnail: props.thumbnail,
       user_view: 0,
       views: 0
     };
@@ -100,7 +101,8 @@ class Videos extends Component {
           },
           body: JSON.stringify({
             url: this.props.id,
-            iduser: this.props.user.id_user
+            iduser: this.props.user.id_user,
+            thumbnail: this.props.thumbnail
           })
         }).then(() => {
           this.componentDidMount();
@@ -114,7 +116,8 @@ class Videos extends Component {
           },
           body: JSON.stringify({
             url: this.props.id,
-            iduser: this.props.guest.id_user
+            iduser: this.props.guest.id_user,
+            thumbnail: this.props.thumbnail
           })
         }).then(() => {
           this.componentDidMount();

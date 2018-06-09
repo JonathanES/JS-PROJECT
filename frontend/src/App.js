@@ -25,6 +25,7 @@ class App extends Component {
       thumbnails: [],
       searchValue: "",
       currentVideos: "",
+      currentThumbnail: "",
       account: false,
       cookies: { isLogin: read_cookie('isLogin'), user: read_cookie('user'), expire: read_cookie('expire'), register: read_cookie('register') }
     };
@@ -42,9 +43,9 @@ class App extends Component {
   }
   changeVideos(data) {
     if (data.account === undefined)
-      this.setState({ currentVideos: data.currentVideos, search: data.search });
+      this.setState({ currentVideos: data.currentVideos, search: data.search, currentThumbnail: data.currentThumbnail });
     else
-      this.setState({ currentVideos: data.currentVideos, search: data.search, account: data.account });
+      this.setState({ currentVideos: data.currentVideos, search: data.search, currentThumbnail: data.currentThumbnail, account: data.account });
   }
 
 
@@ -126,7 +127,7 @@ class App extends Component {
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
           {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
-          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} />}
+          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} thumbnail={this.state.currentThumbnail}/>}
           {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
           {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
         </div>
