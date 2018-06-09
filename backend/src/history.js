@@ -59,7 +59,7 @@ function getSingleHistory(req, res, next) {
 // $FlowFixMe
 function getAllHistoryUser(req, res, next) {
     const id = parseInt(req.params.id);
-    db.any('select t_history.url, t_history.thumbnail,name from t_history, t_videos where t_history.url = t_videos.url and id_user = $1', id)
+    db.any('select t_history.url as id_videos, t_history.thumbnail,name from t_history, t_videos where t_history.url = t_videos.url and id_user = $1', id)
         .then(function (data) {
             res.status(200)
                 .json({

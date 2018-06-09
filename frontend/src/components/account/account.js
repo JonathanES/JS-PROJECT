@@ -12,6 +12,21 @@ class Account extends Component {
         };
         this.handleClick = this.handleClick.bind(this);
     }
+
+    handleClick(id, event) {
+        const that = this;
+        switch (id) {
+            case "delete":
+                fetch('/api/history/user/' + this.state.user.id_user, {
+                    method: 'DELETE'
+                }).then(() => { that.setState({ history: [] }) });
+                break;
+            default:
+                this.props.videos({ currentVideos: event.id_videos, search: false, account: false });
+                break;
+        }
+    }
+
     static getDerivedStateFromProps(props, state) {
         if (props.user === state.user && props.videos === state.videos)
             return null;
@@ -21,10 +36,12 @@ class Account extends Component {
         }
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.favorite !== this.state.favorite) {
+        if (prevState.favorites !== this.state.favorites) {
             fetch('/api/favorite/' + this.state.user.id_user)
                 .then(res => res.json())
                 .then(favorites => this.setState({ favorite: favorites.data }));
+        }
+        if (prevState.history !== this.state.history) {
             fetch('/api/history/user/' + this.state.user.id_user)
                 .then(res => res.json())
                 .then(history => this.setState({ history: history.data }));
@@ -40,33 +57,6 @@ class Account extends Component {
             .then(history => this.setState({ history: history.data }));
     }
 
-    handleClick(event) {
-        const that = this;
-        if (!this.state.favorite)
-            fetch('/api/favorite', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    iduser: this.state.user.id_user,
-                    url: this.state.videos
-                })
-            }).then(() => {
-                that.setState({ favorite: true });
-            })
-        else
-            fetch('/api/favorite/' + this.state.videos + '/' + this.state.user.id_user, {
-                method: 'DELETE'
-            })
-                .then(() => {
-                    that.setState({ favorite: false });
-                })
-
-        event.preventDefault();
-    }
-
     render() {
         return (
             <div>
@@ -76,7 +66,7 @@ class Account extends Component {
                     {this.state.favorites.map(favorite =>
                         <div class="myvideo-elt">
                             <a class="my-yt-thumbnail" href="#">
-                                <img src={favorite.thumbnail} />
+                                <img id={favorite.id_videos} src={favorite.thumbnail} alt={favorite.id_videos} onClick={() => this.handleClick("", favorite)} />
                             </a>
                             <div class="infos">
                                 <p class="title"> {favorite.name} </p>
@@ -87,13 +77,13 @@ class Account extends Component {
                     )}
                 </div>
                 <h3 class="history-title"> Mon historique </h3>
-                <button class="btn-delete-history"> Supprimer l'historique</button>
+                <button class="btn-delete-history" onClick={(e) => this.handleClick("delete", e)} id="delete"> Supprimer l'historique</button>
                 <hr />
                 <div class="history">
                     {this.state.history.map(history =>
                         <div class="myvideo-elt">
                             <a class="my-yt-thumbnail" href="#">
-                                <img src={history.thumbnail} />
+                                <img id={history.id_videos} src={history.thumbnail} alt={history.id_videos} onClick={() => this.handleClick("", history)}/>
                             </a>
                             <div class="infos">
                                 <p class="title"> {history.name}</p>

@@ -35,13 +35,16 @@ class App extends Component {
     this.setState({ isLogin: data.isLogin, user: data.user });
   }
   changeThumbnail(data) {
-    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account:data.account });
+    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account: data.account });
   }
   changeRegister(data) {
     this.setState({ isLogin: data.isLogin, user: data.user, register: data.register });
   }
   changeVideos(data) {
-    this.setState({ currentVideos: data.currentVideos, search: data.search });
+    if (data.account === undefined)
+      this.setState({ currentVideos: data.currentVideos, search: data.search });
+    else
+      this.setState({ currentVideos: data.currentVideos, search: data.search, account: data.account });
   }
 
 
@@ -119,7 +122,7 @@ class App extends Component {
           <Search id="search" thumbnails={this.changeThumbnail.bind(this)} />
         </div>
         <div>
-          {this.state.account === true && <Account user={this.state.user}/>}
+          {this.state.account === true && <Account user={this.state.user} videos={this.changeVideos.bind(this)} />}
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
           {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}

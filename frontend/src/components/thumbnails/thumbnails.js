@@ -50,13 +50,11 @@ class Thumbnails extends Component {
                 thumbnail: event.url
 
             })
-        })
-            .then(() => {
+        }).then(() => {
                 this.setState({ currentVideos: event.id });
                 this.setState({ search: false });
 
-            })
-            .then(() => {
+            }).then(() => {
                 this.props.videos({ currentVideos: this.state.currentVideos, search: this.state.search });
             });
         if (this.state.isLogin)
