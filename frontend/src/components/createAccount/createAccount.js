@@ -46,13 +46,13 @@ class CreateAccount extends Component {
         email: this.state.email,
         password: this.state.password
       })
-    })
-    fetch('/api/user/email/' + this.state.email + '/' + this.state.password)
+    }).then(() => {
+      fetch('/api/user/email/' + this.state.email + '/' + this.state.password)
       .then(res => res.json())
       .then(function (user) {
         switch (user.status) {
           case "success":
-            that.props.register({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: user.data.id }, tryToLogin: false, register: false });
+            that.props.register({ isLogin: true, user: { email: that.state.email, password: that.state.password, pseudo: that.state.pseudo, id_user: user.data.id_user }, tryToLogin: false, register: false });
             bake_cookie('user', user);
             bake_cookie('isLogin', true);
             bake_cookie('register',false);
@@ -71,7 +71,7 @@ class CreateAccount extends Component {
             break;
         }
       });
-    alert('A name was submitted: ' + this.state.email);
+    })
     event.preventDefault();
   }
 

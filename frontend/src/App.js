@@ -11,6 +11,7 @@ import Comment from './components/comment/comment';
 import Favorite from './components/favorite/favorite';
 import Account from './components/account/account';
 
+
 class App extends Component {
   constructor() {
     super();
@@ -123,7 +124,7 @@ class App extends Component {
           <Search id="search" thumbnails={this.changeThumbnail.bind(this)} />
         </div>
         <div>
-          {this.state.account === true && <Account user={this.state.user} videos={this.changeVideos.bind(this)} />}
+          {this.state.account === true && this.state.isLogin === true && <Account user={this.state.user} videos={this.changeVideos.bind(this)} />}
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} />}
           {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
