@@ -47,12 +47,12 @@ class Account extends Component {
         }
     }
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.favorites !== this.state.favorites) {
+        if (prevState.favorites.length !== this.state.favorites.length) {
             fetch('/api/favorite/' + this.state.user.id_user)
                 .then(res => res.json())
                 .then(favorites => this.setState({ favorites: favorites.data }));
         }
-        if (prevState.history !== this.state.history) {
+        if (prevState.history.length !== this.state.history.length) {
             fetch('/api/history/user/' + this.state.user.id_user)
                 .then(res => res.json())
                 .then(history => this.setState({ history: history.data }));

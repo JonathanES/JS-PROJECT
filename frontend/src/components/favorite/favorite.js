@@ -62,7 +62,7 @@ class Favorite extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.handleClick} class={this.state.favorite ? "btn-img btn-favorite uppercase" : "btn-img btn-delete-favorite uppercase"}>Ajouter aux favoris</button>
+                <button onClick={this.handleClick} class={this.state.favorite ? "btn-img btn-delete-favorite uppercase" : "btn-img btn-favorite uppercase"}>Ajouter aux favoris</button>
             </div>
         );
     }
