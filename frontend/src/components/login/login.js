@@ -16,6 +16,11 @@ class Login extends Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event){
+    this.props.register({ tryToLogin: false, user: {},register: true });
   }
 
   handleChange(event) {
@@ -82,7 +87,7 @@ class Login extends Component {
                 </div>
                 <button class="btn uppercase" type="submit">Se connecter</button>
               </div>
-              <p class="account-help">Vous n'avez pas encore de compte ? <a class="underline red" >S'inscrire</a></p>
+              <p class="account-help">Vous n'avez pas encore de compte ? <a onClick={this.handleClick} class="underline red" >S'inscrire</a></p>
             </form>
           </div>
         </div>

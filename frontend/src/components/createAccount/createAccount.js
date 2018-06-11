@@ -14,8 +14,12 @@ class CreateAccount extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(event){
+    this.props.register({isLogin: false, tryToLogin: true, user: {},register: false });
+  }
   handleChange(event) {
     switch (event.target.id) {
       case "pseudo":
@@ -104,7 +108,7 @@ class CreateAccount extends Component {
                 <button type="submit" class="btn uppercase">S'inscrire</button>
               </form>
             </div>
-            <p class="account-help">Vous avez déjà un compte ? <a class="underline red" >Se connecter</a></p>
+            <p class="account-help">Vous avez déjà un compte ? <a onClick={this.handleClick} class="underline red" >Se connecter</a></p>
           </div>
         </div>
       </div>
