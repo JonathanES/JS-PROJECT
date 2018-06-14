@@ -27,7 +27,7 @@ class Search extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="inline" onSubmit={this.handleSubmit}>
                 <input id="search-bar" type="text" value={this.state.value} onChange={this.handleChange} placeholder="Rechercher une vidéo" />
                 <button type="submit" id="search-button"></button>
             </form>
