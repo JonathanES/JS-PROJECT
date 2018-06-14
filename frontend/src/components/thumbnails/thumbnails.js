@@ -87,8 +87,8 @@ class Thumbnails extends Component {
 
     render() {
         return (
-            <div>
-                <h3 class="center result-search">Résultat de votre recherche "<span class="red">{this.state.value}</span>"</h3>
+            <div class="contain">
+            <h3 class="center result-search">Résultat de votre recherche "<span class="red">{this.state.value}</span>"</h3>
                 <div class="search-container">
                     {this.state.thumbnails.map(thumbnail =>
                         <a key={thumbnail.id} class="yt-thumbnail" href="#">

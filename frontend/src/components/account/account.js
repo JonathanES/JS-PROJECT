@@ -34,8 +34,8 @@ class Account extends Component {
             method: 'DELETE'
         });
         fetch('/api/favorite/' + this.state.user.id_user)
-        .then(res => res.json())
-        .then(favorites => this.setState({ favorites: favorites.data }));
+            .then(res => res.json())
+            .then(favorites => this.setState({ favorites: favorites.data }));
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -70,7 +70,7 @@ class Account extends Component {
 
     render() {
         return (
-            <div>
+            <div class="contain">
                 <h3> Mes vidéos favorites (<span class="red">{this.state.favorites.length}</span>)</h3>
                 <hr />
                 <div class="myvideo">
