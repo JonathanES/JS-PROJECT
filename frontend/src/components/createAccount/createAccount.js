@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './createAccount.css';
+import '../../main.css';
 import moment from 'moment';
 import { bake_cookie } from 'sfcookies';
 

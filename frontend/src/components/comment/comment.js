@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import './comment.css';
+import '../../main.css';
 
 class Comment extends Component {
   constructor(props) {

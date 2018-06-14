@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './favorite.css'
+import '../../main.css';
 
 class Favorite extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './main.css';
 import Search from './components/search/search';
 import Thumbnails from './components/thumbnails/thumbnails';
 import CreateAccount from './components/createAccount/createAccount';
@@ -75,7 +75,7 @@ class App extends Component {
     event.preventDefault();
   }
 
-  cookieManagement(){
+  cookieManagement() {
     let d = new Date();
     d = moment(d, "YYYY-MM-DD HH:mm");
     if (this.state.cookies.expire.length > 0)
@@ -109,29 +109,43 @@ class App extends Component {
             break;
         }
       });
-      this.cookieManagement();
+    this.cookieManagement();
   }
 
   render() {
     return (
       <div>
-        <div class="header">
-          <img id="logo" src="./Images/looptube_logo.svg" alt="logo" />
 
+        <div class="header">
+          <nav role="navigation">
+            <div id="menuToggle">
+              <input type="checkbox" />
+              <span></span>
+              <span></span>
+              <span></span>
+              <ul id="menu">
+                {this.state.isLogin === false && <a onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
+                {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account" href="#">Mes vidéos </a>}
+                {this.state.isLogin === true && <a class="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
+                {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
+              </ul>
+            </div>
+          </nav>
+          <img id="logo" src="./Images/looptube_logo.svg" alt="logo" />
           <div class="links">
             {this.state.isLogin === false && <a onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
             {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account" href="#">Mes vidéos </a>}
             {this.state.isLogin === true && <a class="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
             {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
           </div>
-          { <Search id="search" thumbnails={this.changeThumbnail.bind(this)} />}
+          {<Search id="search" thumbnails={this.changeThumbnail.bind(this)} />}
         </div>
         <div>
           {this.state.account === true && this.state.isLogin === true && <Account user={this.state.user} videos={this.changeVideos.bind(this)} />}
           {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
-          {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} register={this.changeRegister.bind(this)}/>}
+          {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} register={this.changeRegister.bind(this)} />}
           {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
-          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} thumbnail={this.state.currentThumbnail}/>}
+          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} thumbnail={this.state.currentThumbnail} />}
           {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
           {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
         </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Videos from '../videos/videos';
-import './thumbnails.css';
+import '../../main.css';
 import Comment from '../comment/comment';
 import Favorite from '../favorite/favorite';
 
