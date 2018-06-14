@@ -2,6 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>LoopTube - Sign up</title>
         <link rel="icon" href="Images/favicon.png">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -9,9 +10,23 @@
     </head>
     <body>
         <div class="header">
+            <nav role="navigation">
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    
+                    <ul id="menu">
+                        <a href="#"><li>Se connecter</li></a>
+                        <a href="#"><li>S'inscrire</li></a>
+                    </ul>
+                </div>
+            </nav>
             <img id="logo" src="./Images/looptube_logo.svg" />
             <input id="search-bar" type="text" placeholder="Rechercher une vidéo"/>
             <button id="search-button"></button>
+            
             <div class="links">
                 <a href="#">Se connecter</a>
                 <a href="#" class="red">S'inscrire</a>
