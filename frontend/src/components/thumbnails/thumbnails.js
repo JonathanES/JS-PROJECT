@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import Videos from '../videos/videos';
 import '../../main.css';
-import Comment from '../comment/comment';
-import Favorite from '../favorite/favorite';
+
 
 class Thumbnails extends Component {
     constructor(props) {
@@ -87,11 +85,11 @@ class Thumbnails extends Component {
 
     render() {
         return (
-            <div class="contain">
-            <h3 class="center result-search">Résultat de votre recherche "<span class="red">{this.state.value}</span>"</h3>
-                <div class="search-container">
+            <div className="contain">
+            <h3 className="center result-search">Résultat de votre recherche "<span className="red">{this.state.value}</span>"</h3>
+                <div className="search-container">
                     {this.state.thumbnails.map(thumbnail =>
-                        <a key={thumbnail.id} class="yt-thumbnail" href="#">
+                        <a key={thumbnail.id} className="yt-thumbnail">
                             <img id={thumbnail.id} src={thumbnail.url} alt={thumbnail.id} onClick={() => this.handleClick(thumbnail)} />
                             <p> {thumbnail.titles}</p>
                         </a>

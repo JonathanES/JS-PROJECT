@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './videos.css';
 import YouTube from 'react-youtube';
-import Views from '../views/views'
+import Views from '../views/views';
+import '../../main.css';
+
 
 class Videos extends Component {
   constructor(props) {
@@ -134,7 +135,7 @@ class Videos extends Component {
     };
     return (
       <div>
-        <div class="yt-player">
+        <div className="yt-player">
           <YouTube
             videoId={this.props.id}
             opts={opts}

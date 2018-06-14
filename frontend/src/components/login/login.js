@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bake_cookie, read_cookie } from 'sfcookies';
-import './login.css';
 import moment from 'moment';
+import '../../main.css';
 
 class Login extends Component {
   constructor(props) {
@@ -70,24 +70,24 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <div class="window login">
-          <div class="window-header">
+        <div className="window login">
+          <div className="window-header">
             <h1 > Connexion </h1>
           </div>
-          <div class="window-contain">
+          <div className="window-contain">
             <form onSubmit={this.handleSubmit}>
-              <div class="form-group">
-                <div class="form-field">
-                  <label for="input-login">Email :</label>
+              <div className="form-group">
+                <div className="form-field">
+                  <label htmlFor="email">Email :</label>
                   <input id="email" type="text" value={this.state.email} onChange={this.handleChange} />
                 </div>
-                <div class="form-field">
-                  <label for="input-pwd">Password :</label>
+                <div className="form-field">
+                  <label htmlFor="password">Password :</label>
                   <input id="password" type="text" value={this.state.password} onChange={this.handleChange} />
                 </div>
-                <button class="btn uppercase" type="submit">Se connecter</button>
+                <button className="btn uppercase" type="submit">Se connecter</button>
               </div>
-              <p class="account-help">Vous n'avez pas encore de compte ? <a onClick={this.handleClick} class="underline red" >S'inscrire</a></p>
+              <p className="account-help">Vous n'avez pas encore de compte ? <a onClick={this.handleClick} className="underline red" >S'inscrire</a></p>
             </form>
           </div>
         </div>

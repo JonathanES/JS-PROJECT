@@ -38,7 +38,7 @@ class App extends Component {
     this.setState({ isLogin: data.isLogin, user: data.user });
   }
   changeThumbnail(data) {
-    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account: data.account });
+    this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account: data.account,tryToLogin: false, register: false });
   }
   changeRegister(data) {
     this.setState({ isLogin: data.isLogin, user: data.user, register: data.register, tryToLogin: data.tryToLogin });
@@ -54,7 +54,7 @@ class App extends Component {
   handleClick(id, event) {
     switch (id) {
       case "connect":
-        this.setState({ tryToLogin: true });
+        this.setState({ tryToLogin: true, register: false });
         break;
       case "disconnect":
         this.setState({ tryToLogin: false, user: {}, isLogin: false });
@@ -63,10 +63,13 @@ class App extends Component {
         delete_cookie('expire');
         break;
       case "register":
-        this.setState({ register: true });
+        this.setState({ register: true, tryToLogin: false });
         break;
       case "account":
-        this.state.account ? this.setState({ account: false }) : this.setState({ account: true });
+         this.setState({ account: true });
+        break;
+      case "logo":
+        this.setState({register: false, tryToLogin: false, account: false, thumbnails: [], currentThumbnail: "", currentVideos: ""});
         break;
       default:
         break;
@@ -115,9 +118,8 @@ class App extends Component {
   render() {
     return (
       <div>
-
-        <div class="header">
-          <nav role="navigation">
+        <div className="header">
+          <nav>
             <div id="menuToggle">
               <input type="checkbox" />
               <span></span>
@@ -125,29 +127,29 @@ class App extends Component {
               <span></span>
               <ul id="menu">
                 {this.state.isLogin === false && <a onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
-                {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account" href="#">Mes vidéos </a>}
-                {this.state.isLogin === true && <a class="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
-                {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
+                {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account">Mes vidéos </a>}
+                {this.state.isLogin === true && <a className="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
+                {this.state.isLogin === false && <a className="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
               </ul>
             </div>
           </nav>
-          <img id="logo" src="./Images/looptube_logo.svg" alt="logo" />
-          <div class="links">
+          <img id="logo" src="./Images/looptube_logo.svg" alt="logo" onClick={(e) => this.handleClick("logo", e)} />
+          <div className="links">
             {this.state.isLogin === false && <a onClick={(e) => this.handleClick("connect", e)} id="connect" >Se connecter</a>}
-            {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account" href="#">Mes vidéos </a>}
-            {this.state.isLogin === true && <a class="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
-            {this.state.isLogin === false && this.state.register === false && <a class="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
+            {this.state.isLogin === true && <a onClick={(e) => this.handleClick("account", e)} id="account">Mes vidéos </a>}
+            {this.state.isLogin === true && <a className="red" onClick={(e) => this.handleClick("disconnect", e)} id="disconnect">Se déconnecter</a>}
+            {this.state.isLogin === false && <a className="red" onClick={(e) => this.handleClick("register", e)} id="register">S'inscrire</a>}
           </div>
           {<Search id="search" thumbnails={this.changeThumbnail.bind(this)} />}
         </div>
         <div>
           {this.state.account === true && this.state.isLogin === true && <Account user={this.state.user} videos={this.changeVideos.bind(this)} />}
-          {this.state.register === true && <CreateAccount register={this.changeRegister.bind(this)} />}
+          {this.state.register === true && this.state.tryToLogin === false && <CreateAccount register={this.changeRegister.bind(this)} />}
           {this.state.isLogin === false && this.state.tryToLogin === true && <Login login={this.changeStuff.bind(this)} register={this.changeRegister.bind(this)} />}
-          {this.state.currentVideos === "" && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
-          {this.state.search === false && this.state.account === false && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} thumbnail={this.state.currentThumbnail} />}
-          {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
-          {this.state.search === false && this.state.account === false && this.state.isLogin === true && <Comment user={this.state.user} videos={this.state.currentVideos} />}
+          {this.state.currentVideos === "" && this.state.account === false && this.state.tryToLogin === false && this.state.register === false && <Thumbnails videos={this.changeVideos.bind(this)} login={this.state.isLogin} user={this.state.user} guest={this.state.guest} thumbnails={this.state.thumbnails} searchValue={this.state.searchValue} />}
+          {this.state.search === false && this.state.account === false && this.state.tryToLogin === false && this.state.register === false && this.state.currentVideos !== "" && <Videos login={this.state.isLogin} id={this.state.currentVideos} user={this.state.user} guest={this.state.guest} thumbnail={this.state.currentThumbnail} />}
+          {this.state.search === false && this.state.account === false && this.state.isLogin === true && this.state.tryToLogin === false && this.state.register === false && this.state.currentVideos !== ""  && <Favorite videos={this.state.currentVideos} user={this.state.user} />}
+          {this.state.search === false && this.state.account === false && this.state.isLogin === true && this.state.tryToLogin === false && this.state.register === false && this.state.currentVideos !== ""  && <Comment user={this.state.user} videos={this.state.currentVideos} />}
         </div>
       </div>
     );

@@ -29,7 +29,6 @@ class Account extends Component {
     }
 
     handleDelete(id, event) {
-        const that = this;
         fetch('/api/favorite/' + event.id_videos + '/' + this.state.user.id_user, {
             method: 'DELETE'
         });
@@ -76,7 +75,7 @@ class Account extends Component {
                 <div class="myvideo">
                     {this.state.favorites.map(favorite =>
                         <div class="myvideo-elt">
-                            <a class="my-yt-thumbnail" href="#">
+                            <a class="my-yt-thumbnail">
                                 <img id={favorite.id_videos} src={favorite.thumbnail} alt={favorite.id_videos} onClick={() => this.handleClick("", favorite)} />
                             </a>
                             <div class="infos">
@@ -93,7 +92,7 @@ class Account extends Component {
                 <div class="history">
                     {this.state.history.map(history =>
                         <div class="myvideo-elt">
-                            <a class="my-yt-thumbnail" href="#">
+                            <a class="my-yt-thumbnail">
                                 <img src={history.thumbnail} alt={history.id_videos} onClick={() => this.handleClick("", history)} />
                             </a>
                             <div class="infos">
