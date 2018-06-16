@@ -79,7 +79,7 @@ a:hover {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border: none;
-    width: 35%;
+    width: 34%;
 }
 .header #search-button {
     background-image: url(Images/search.svg);
@@ -515,5 +515,27 @@ hr {
 }
 
 @media screen and (max-width: 750px) {
-    
+    .myvideo-elt {
+        text-align: center;
+    }
+    .myvideo-elt .infos {
+        display: block; 
+        margin-left: 0;
+    }
+    .myvideo-elt .my-yt-thumbnail img {
+        width: 350px;
+    }
+    .btn-delete-favorite {
+        position: initial;
+        -webkit-transform: initial;
+        -ms-transform: initial;
+        transform: initial;
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .myvideo-elt .my-yt-thumbnail img {
+        width: 200px;
+    }
 }
