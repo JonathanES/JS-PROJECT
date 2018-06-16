@@ -60,24 +60,24 @@ class Comment extends Component {
   render() {
     return (
       <div>
-        <div class="comments-space">
-          <h3>Commentaires (<span class="red">{this.state.comments.length}</span>)</h3>
+        <div className="comments-space">
+          <h3>Commentaires (<span className="red">{this.state.comments.length}</span>)</h3>
           {this.state.comments.map(comment =>
-            <div class="comment">
-              <div class="comment-header">
-                <p class="author"> {comment.pseudo} </p>
-                <p class="date"> { new Date(comment.datepost).toISOString().replace(/T/, ' ').replace(/\..+/, '')} </p>
+            <div className="comment">
+              <div className="comment-header">
+                <p className="author"> {comment.pseudo} </p>
+                <p className="date"> { new Date(comment.datepost).toISOString().replace(/T/, ' ').replace(/\..+/, '')} </p>
               </div>
-              <div class="comment-content">
+              <div className="comment-content">
                 <p>{comment.comment}</p>
               </div>
             </div>
           )}
-          <div class="post-comment">
+          <div className="post-comment">
             <form onSubmit={this.handleSubmit} id="usrform">
               <label for="ta-comment">Vous pouvez poster un commentaire !</label>
               <textarea value={this.state.comment} onChange={this.handleChange} id="ta-comment" rows="5" />
-              <button type="submit" class="btn btn-send uppercase">Envoyer</button>
+              <button type="submit" className="btn btn-send uppercase">Envoyer</button>
             </form>
           </div>
         </div>
