@@ -83,12 +83,6 @@ class Videos extends Component {
       });
   }
 
-
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    event.target.pauseVideo();
-  }
-
   _onStateChange(event) {
     if (event.data === 0) {
       event.target.playVideo();
