@@ -535,7 +535,21 @@ hr {
 }
 
 @media screen and (max-width: 480px) {
+    .contain h3 {
+        display: block;
+        text-align: center;
+    }
+
     .myvideo-elt .my-yt-thumbnail img {
         width: 200px;
+    }
+    .btn-delete-history {
+        float: none;
+        display: block;
+        text-align: center;
+        margin: 5px auto;
+    }
+    .history-title {
+        margin-bottom: 5px;
     }
 }
