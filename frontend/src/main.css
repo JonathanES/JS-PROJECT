@@ -41,7 +41,7 @@ h3 {
     font-size: 22px;
     margin: 20px 0;
 }
-.inline {
+.form-search {
     display: inline;
 }
 a {
@@ -54,6 +54,7 @@ a:hover {
 /***** Header *****/
 #logo {
     margin: 0 20px;
+    cursor: pointer;
 }
 .header {
     padding: 20px;
@@ -228,7 +229,6 @@ nav {
     #logo {
         display: block;
         margin: 0 auto 15px;
-        cursor: pointer;
     }
     .header .links {
         display: none;
@@ -236,6 +236,10 @@ nav {
     .header #search-bar {
         margin: 9px 0;
         width: 70%;
+    }
+    .form-search {
+        display: block;
+        text-align: center;
     }
 }
 @media screen and (max-width: 450px) {
@@ -508,4 +512,8 @@ hr {
     color: black;
     font-size: 16px;
     margin: 0;
+}
+
+@media screen and (max-width: 750px) {
+    
 }
