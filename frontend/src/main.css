@@ -228,6 +228,7 @@ nav {
     #logo {
         display: block;
         margin: 0 auto 15px;
+        cursor: pointer;
     }
     .header .links {
         display: none;
@@ -271,6 +272,30 @@ nav {
 .window .window-contain {
     padding: 30px 0;
     text-align: center;
+}
+
+@media screen and (max-width: 950px) {
+    .window {
+        margin-top: 50px;
+        width: 80%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .window {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .window .form-group .form-field label {
+        display: block;
+        text-align: left;
+        width: 100%;
+    }
+
+    .window .form-group .form-field input {
+        display: block;
+        width: 80%;
+        text-align: left;
+    }
 }
 
 /* Button */
