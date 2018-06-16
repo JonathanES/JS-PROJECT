@@ -106,11 +106,11 @@ class CreateAccount extends Component {
                 </div>
                 <div className="form-field">
                   <label htmlFor="password">Password :</label>
-                  <input id="password" type="text" value={this.state.password} onChange={this.handleChange} />
+                  <input id="password" type="password" value={this.state.password} onChange={this.handleChange} />
                 </div>
                 <div className="form-field">
                   <label htmlFor="password-confirmation">Confirmation :</label>
-                  <input id="password-confirmation" type="text" value={this.state.passwordConfirmation} onChange={this.handleChange} />
+                  <input id="password-confirmation" type="password" value={this.state.passwordConfirmation} onChange={this.handleChange} />
                 </div>
                 <button type="submit" className="btn uppercase">S'inscrire</button>
               </form>
