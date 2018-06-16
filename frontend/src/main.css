@@ -44,6 +44,12 @@ h3 {
 .inline {
     display: inline;
 }
+a {
+    cursor: pointer;
+}
+a:hover {
+    text-decoration: underline;
+}
 
 /***** Header *****/
 #logo {
@@ -98,8 +104,9 @@ nav {
 }
 #menuToggle a
  {
-   text-decoration: none;
    color: white;
+   display: block;
+   margin-top: 10px;
    
    transition: color 0.3s ease;
  }

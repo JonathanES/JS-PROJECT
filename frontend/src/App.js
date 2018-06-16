@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './main.css';
+
 import Search from './components/search/search';
 import Thumbnails from './components/thumbnails/thumbnails';
 import CreateAccount from './components/createAccount/createAccount';
