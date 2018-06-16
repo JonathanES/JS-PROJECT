@@ -66,7 +66,7 @@ class Comment extends Component {
             <div class="comment">
               <div class="comment-header">
                 <p class="author"> {comment.pseudo} </p>
-                <p class="date"> {comment.datepost} </p>
+                <p class="date"> { new Date(comment.datepost).toISOString().replace(/T/, ' ').replace(/\..+/, '')} </p>
               </div>
               <div class="comment-content">
                 <p>{comment.comment}</p>
