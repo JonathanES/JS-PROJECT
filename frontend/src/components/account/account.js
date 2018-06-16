@@ -69,35 +69,35 @@ class Account extends Component {
 
     render() {
         return (
-            <div class="contain">
-                <h3> Mes vidéos favorites (<span class="red">{this.state.favorites.length}</span>)</h3>
+            <div className="contain">
+                <h3> Mes vidéos favorites (<span className="red">{this.state.favorites.length}</span>)</h3>
                 <hr />
-                <div class="myvideo">
+                <div className="myvideo">
                     {this.state.favorites.map(favorite =>
-                        <div class="myvideo-elt">
-                            <a class="my-yt-thumbnail">
+                        <div className="myvideo-elt">
+                            <a className="my-yt-thumbnail">
                                 <img id={favorite.id_videos} src={favorite.thumbnail} alt={favorite.id_videos} onClick={() => this.handleClick("", favorite)} />
                             </a>
-                            <div class="infos">
-                                <p class="title"> {favorite.name} </p>
-                                <p class="time"> 13:32 </p>
+                            <div className="infos">
+                                <p className="title"> {favorite.name} </p>
+                                <p className="time"> 13:32 </p>
                             </div>
-                            <button class="btn-img btn-delete-favorite uppercase" id={favorite.id_videos} onClick={() => this.handleDelete("", favorite)}> Retirer des favoris</button>
+                            <button className="btn-img btn-delete-favorite uppercase" id={favorite.id_videos} onClick={() => this.handleDelete("", favorite)}> Retirer des favoris</button>
                         </div>
                     )}
                 </div>
-                <h3 class="history-title"> Mon historique </h3>
-                <button class="btn-delete-history" onClick={(e) => this.handleClick("delete", e)} id="delete"> Supprimer l'historique</button>
+                <h3 className="history-title"> Mon historique </h3>
+                <button className="btn-delete-history" onClick={(e) => this.handleClick("delete", e)} id="delete"> Supprimer l'historique</button>
                 <hr />
-                <div class="history">
+                <div className="history">
                     {this.state.history.map(history =>
-                        <div class="myvideo-elt">
-                            <a class="my-yt-thumbnail">
+                        <div className="myvideo-elt">
+                            <a className="my-yt-thumbnail">
                                 <img src={history.thumbnail} alt={history.id_videos} onClick={() => this.handleClick("", history)} />
                             </a>
-                            <div class="infos">
-                                <p class="title"> {history.name}</p>
-                                <p class="time"> 13:32 </p>
+                            <div className="infos">
+                                <p className="title"> {history.name}</p>
+                                <p className="time"> 13:32 </p>
                             </div>
                         </div>
                     )}
