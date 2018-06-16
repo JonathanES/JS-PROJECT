@@ -35,13 +35,13 @@ class App extends Component {
     this.cookieManagement = this.cookieManagement.bind(this);
   }
   changeStuff(data) {
-    this.setState({ isLogin: data.isLogin, user: data.user });
+    this.setState({ isLogin: data.isLogin, user: data.user, account: true });
   }
   changeThumbnail(data) {
     this.setState({ thumbnails: data.thumbnails, searchValue: data.searchValue, search: data.search, currentVideos: data.currentVideos, account: data.account,tryToLogin: false, register: false });
   }
   changeRegister(data) {
-    this.setState({ isLogin: data.isLogin, user: data.user, register: data.register, tryToLogin: data.tryToLogin });
+    this.setState({ isLogin: data.isLogin, user: data.user, register: data.register, tryToLogin: data.tryToLogin, account: true });
   }
   changeVideos(data) {
     if (data.account === undefined)
