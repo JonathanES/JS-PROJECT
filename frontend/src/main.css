@@ -399,6 +399,20 @@ hr {
     display: inline-block;
 }
 
+@media screen and (max-width: 970px) {
+    .yt-player iframe {
+        width: 500px;
+        height: 281px;
+    }
+}
+
+@media screen and (max-width: 535px) {
+    .yt-player iframe {
+        width: 250px;
+        height: 140px;
+    }
+}
+
 /* Comments */
 
 .comments-space {
@@ -439,7 +453,10 @@ hr {
     padding: 20px;
     margin: 0;
     font-family: 'Roboto';
-    width: 95%;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 /* Video searches */
